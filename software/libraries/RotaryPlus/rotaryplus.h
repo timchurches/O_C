@@ -27,6 +27,7 @@ class Rotary
     Rotary(char, char);
     // Process pin(s)
     unsigned char process();
+    void scan();
     bool change();
     long pos();
     void setPos(long);

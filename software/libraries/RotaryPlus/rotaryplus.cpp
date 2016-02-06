@@ -150,6 +150,19 @@ unsigned char Rotary::process() {
   return state;
 }
 
+void Rotary::scan() {
+
+  // Simple version: Check for falling edge of A and determine direction using B state
+  unsigned char pins = (!digitalReadFast(pin1) << 1) | !digitalReadFast(pin2);
+  if ((pins & 0x1) && !(state & 0x1)) {
+    if (pins & 0x2)
+      --position;
+    else
+      ++position;
+  }
+  state = pins;
+}
+
 bool Rotary::change() {
   if (position != oldPosition) {
     if (position > oldPosition) {

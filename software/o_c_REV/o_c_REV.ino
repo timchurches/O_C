@@ -102,14 +102,14 @@ enum encoders
 };
 
 volatile uint_fast8_t _ENC = false;
-static const uint32_t _ENC_RATE = 15000;
+static constexpr uint32_t ENCODER_SCAN_RATE = 1000;
 
 /*  ------------------------ core timer ISR ---------------------------   */
 // 60us = 16.666...kHz : Works, SPI transfer ends 2uS before next ISR
 // 66us = 15.1515...kHz
 // 72us = 13.888...kHz
 // 100us = 10Khz
-static const uint32_t CORE_TIMER_RATE = 60;
+static constexpr uint32_t CORE_TIMER_RATE = 60;
 IntervalTimer CORE_timer;
 
 uint32_t ENC_timer_counter = 0;
@@ -137,11 +137,13 @@ void FASTRUN CORE_timer_ISR() {
   // kAdcSmoothing == 4 has some (maybe 1-2LSB) jitter but seems "Good Enough".
   OC::ADC::Scan();
 
-  if (ENC_timer_counter < _ENC_RATE / CORE_TIMER_RATE - 1) {
+  if (ENC_timer_counter < ENCODER_SCAN_RATE / CORE_TIMER_RATE - 1) {
     ++ENC_timer_counter;
   } else {
-    ENC_timer_counter = 0;
+    encoder[LEFT].scan();
+    encoder[RIGHT].scan();
     _ENC = true;
+    ENC_timer_counter = 0;
   }
 
   APPS::ISR();
@@ -175,10 +177,10 @@ void setup(){
   attachInterrupt(TR3, tr3_ISR, FALLING);
   attachInterrupt(TR4, tr4_ISR, FALLING);
   // encoder ISR 
-  attachInterrupt(encL1, left_encoder_ISR, CHANGE);
-  attachInterrupt(encL2, left_encoder_ISR, CHANGE);
-  attachInterrupt(encR1, right_encoder_ISR, CHANGE);
-  attachInterrupt(encR2, right_encoder_ISR, CHANGE);
+//  attachInterrupt(encL1, left_encoder_ISR, CHANGE);
+//  attachInterrupt(encL2, left_encoder_ISR, CHANGE);
+//  attachInterrupt(encR1, right_encoder_ISR, CHANGE);
+ // attachInterrupt(encR2, right_encoder_ISR, CHANGE);
 
   Serial.begin(9600); 
 
