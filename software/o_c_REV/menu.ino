@@ -65,6 +65,8 @@ void screensaver() {
 }
 
 static const size_t kScopeDepth = 64;
+static const size_t kLorenzScopeDepth = 128;
+
 
 uint16_t scope_history[DAC::kHistoryDepth];
 uint16_t averaged_scope_history[DAC_CHANNEL_LAST][kScopeDepth];
@@ -118,5 +120,41 @@ void scope_render() {
     graphics.setPixel(64 + x, 0 + averaged_scope_history[DAC_CHANNEL_B][index]);
     graphics.setPixel(x, 32 + averaged_scope_history[DAC_CHANNEL_C][index]);
     graphics.setPixel(64 + x, 32 + averaged_scope_history[DAC_CHANNEL_D][index]);
+  }
+}
+
+void lorenz_scope_render() {
+  switch (scope_update_channel) {
+    case DAC_CHANNEL_A:
+      DAC::getHistory<DAC_CHANNEL_A>(scope_history);
+      averaged_scope_history[DAC_CHANNEL_A][averaged_scope_tail] = ((65535U - calc_average<DAC::kHistoryDepth>(scope_history)) >> 10) & 0x1f;
+      scope_update_channel = DAC_CHANNEL_B;
+      break;
+    case DAC_CHANNEL_B:
+      DAC::getHistory<DAC_CHANNEL_B>(scope_history);
+      averaged_scope_history[DAC_CHANNEL_B][averaged_scope_tail] = ((65535U - calc_average<DAC::kHistoryDepth>(scope_history)) >> 10) & 0x1f;
+      scope_update_channel = DAC_CHANNEL_C;
+      break;
+    case DAC_CHANNEL_C:
+      DAC::getHistory<DAC_CHANNEL_C>(scope_history);
+      averaged_scope_history[DAC_CHANNEL_C][averaged_scope_tail] = ((65535U - calc_average<DAC::kHistoryDepth>(scope_history)) >> 11) & 0x1f;
+      scope_update_channel = DAC_CHANNEL_D;
+      break;
+    case DAC_CHANNEL_D:
+      DAC::getHistory<DAC_CHANNEL_D>(scope_history);
+      averaged_scope_history[DAC_CHANNEL_D][averaged_scope_tail] = ((65535U - calc_average<DAC::kHistoryDepth>(scope_history)) >> 11) & 0x1f;
+      scope_update_channel = DAC_CHANNEL_A;
+      averaged_scope_tail = (averaged_scope_tail + 1) % kLorenzScopeDepth;
+      break;
+    default: break;
+  }
+
+
+  for (weegfx::coord_t x = 0; x < (weegfx::coord_t)kLorenzScopeDepth - 1; ++x) {
+    size_t index = (x + averaged_scope_tail + 1) % kLorenzScopeDepth;
+    graphics.setPixel(0 + averaged_scope_history[DAC_CHANNEL_A][index], 0 + averaged_scope_history[DAC_CHANNEL_B][index]);
+//    graphics.setPixel(64 + x, 0 + averaged_scope_history[DAC_CHANNEL_B][index]);
+//    graphics.setPixel(x, 32 + averaged_scope_history[DAC_CHANNEL_C][index]);
+//    graphics.setPixel(64 + x, 32 + averaged_scope_history[DAC_CHANNEL_D][index]);
   }
 }

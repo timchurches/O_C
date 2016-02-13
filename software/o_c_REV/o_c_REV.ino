@@ -211,7 +211,7 @@ void setup(){
 
   // splash screen, sort of ... 
   hello();
-  delay(2000);
+  delay(10000);
 
   calibration_load();
   if (!digitalRead(butL))

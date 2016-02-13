@@ -1,7 +1,7 @@
 #include "util_app.h"
 
 App available_apps[] = {
-  {"ASR", ASR_init, ASR_save, ASR_restore, NULL, ASR_resume,
+  {"Ornament crimes", ASR_init, ASR_save, ASR_restore, NULL, ASR_resume,
     ASR_loop, ASR_menu, screensaver, ASR_topButton, ASR_lowerButton, ASR_rightButton, ASR_leftButton, ASR_leftButtonLong, ASR_encoders, ASR_isr},
   {"Harrington 1200", H1200_init, H1200_save, H1200_restore, NULL, H1200_resume,
     H1200_loop, H1200_menu, H1200_screensaver, H1200_topButton, H1200_lowerButton, H1200_rightButton, H1200_leftButton, H1200_leftButtonLong, H1200_encoders, NULL},
@@ -9,8 +9,10 @@ App available_apps[] = {
     Automatonnetz_loop, Automatonnetz_menu, Automatonnetz_screensaver, Automatonnetz_topButton, Automatonnetz_lowerButton, Automatonnetz_rightButton, Automatonnetz_leftButton, Automatonnetz_leftButtonLong, Automatonnetz_encoders, NULL},
   {"VierfStSpQuaMo", QQ_init, QQ_save, QQ_restore, NULL, QQ_resume,
     QQ_loop, QQ_menu, screensaver, QQ_topButton, QQ_lowerButton, QQ_rightButton, QQ_leftButton, QQ_leftButtonLong, QQ_encoders, QQ_isr},
-  {"frames::poly_lfo", POLYLFO_init, POLYLFO_save, POLYLFO_restore, NULL, POLYLFO_resume,
+  {"Quadraturia", POLYLFO_init, POLYLFO_save, POLYLFO_restore, NULL, POLYLFO_resume,
     POLYLFO_loop, POLYLFO_menu, POLYLFO_screensaver, POLYLFO_topButton, POLYLFO_lowerButton, POLYLFO_rightButton, POLYLFO_leftButton, POLYLFO_leftButtonLong, POLYLFO_encoders, POLYLFO_isr},
+  {"Low-rents", LORENZ_init, LORENZ_save, LORENZ_restore, NULL, LORENZ_resume,
+    LORENZ_loop, LORENZ_menu, LORENZ_screensaver, LORENZ_topButton, LORENZ_lowerButton, LORENZ_rightButton, LORENZ_leftButton, LORENZ_leftButtonLong, LORENZ_encoders, LORENZ_isr},
 };
 
 namespace OC {
@@ -32,7 +34,8 @@ struct AppData {
     H1200_SETTINGS_SIZE +
     AUTOMATONNETZ_SETTINGS_SIZE +
     QQ_SETTINGS_SIZE +
-    POLYLFO_SETTINGS_SIZE;
+    POLYLFO_SETTINGS_SIZE + 
+    LORENZ_SETTINGS_SIZE ;
 
   char data[kAppDataSize];
   size_t used;
