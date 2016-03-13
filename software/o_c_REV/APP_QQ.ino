@@ -475,8 +475,7 @@ void QQ_menu() {
   // TODO "Smarter" listing, e.g. hide clkdiv if continuous mode
 
   UI_BEGIN_ITEMS_LOOP(kStartX, first_visible_param, last_visible_param, qq_state.selected_param, 0)
-    if (__selected && qq_state.editing)
-      graphics.print(">");
+    UI_DRAW_EDITABLE(qq_state.editing);
     const settings::value_attr &attr = QuantizerChannel::value_attr(current_item);
     switch (current_item) {
       case CHANNEL_SETTING_SCALE:
