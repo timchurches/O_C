@@ -284,9 +284,11 @@ public:
   }
 
   ChannelSettings visible_params() const {
-    return CHANNEL_SOURCE_TURING == get_source()
+    return CHANNEL_SOURCE_LOGISTIC_MAP == get_source()
       ? CHANNEL_SETTING_LAST
-      : CHANNEL_SETTING_TURING_LENGTH;
+      : CHANNEL_SOURCE_TURING == get_source() 
+      ? CHANNEL_SETTING_LOGISTIC_MAP_R
+      : CHANNEL_SETTING_TURING_LENGTH ;
   }
 
 private:
@@ -320,7 +322,7 @@ const char* const channel_trigger_sources[CHANNEL_TRIGGER_LAST] = {
 };
 
 const char* const channel_input_sources[CHANNEL_SOURCE_LAST] = {
-  "CV1", "CV2", "CV3", "CV4", "TURING", "LOGISTIC"
+  "CV1", "CV2", "CV3", "CV4", "Turing", "Lgstc"
 };
 
 SETTINGS_DECLARE(QuantizerChannel, CHANNEL_SETTING_LAST) {
