@@ -337,9 +337,9 @@ SETTINGS_DECLARE(QuantizerChannel, CHANNEL_SETTING_LAST) {
   { 0, -999, 999, "fine", NULL, settings::STORAGE_TYPE_I16 },
   { 16, 0, 32, "TM length", NULL, settings::STORAGE_TYPE_U8 },
   { 128, 0, 255, "TM probability", NULL, settings::STORAGE_TYPE_U8 },
-  { 24, 0, 120, "TM range", NULL, settings::STORAGE_TYPE_U8 },
+  { 24, 1, 120, "TM range", NULL, settings::STORAGE_TYPE_U8 },
   { 128, 1, 255, "Logistic r", NULL, settings::STORAGE_TYPE_U8 },
-  { 24, 0, 120, "Logistic range", NULL, settings::STORAGE_TYPE_U8 },
+  { 24, 1, 120, "Logistic range", NULL, settings::STORAGE_TYPE_U8 },
   { 128, 1, 255, "Logistic seed", NULL, settings::STORAGE_TYPE_U8 },
 };
 
