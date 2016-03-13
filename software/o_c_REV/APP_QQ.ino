@@ -111,8 +111,10 @@ public:
     return values_[CHANNEL_SETTING_TURING_RANGE];
   }
 
-  void Init() {
+  void Init(ChannelSource source, ChannelTriggerSource trigger_source) {
     InitDefaults();
+    apply_value(CHANNEL_SETTING_SOURCE, source);
+    apply_value(CHANNEL_SETTING_TRIGGER, trigger_source);
 
     force_update_ = false;
     last_scale_ = -1;
@@ -272,8 +274,8 @@ SETTINGS_DECLARE(QuantizerChannel, CHANNEL_SETTING_LAST) {
   { OC::Scales::SCALE_SEMI, 0, OC::Scales::NUM_SCALES - 1, "scale", OC::scale_names, settings::STORAGE_TYPE_U8 },
   { 0, 0, 11, "root", OC::Strings::note_names, settings::STORAGE_TYPE_U8 },
   { 65535, 1, 65535, "active notes", NULL, settings::STORAGE_TYPE_U16 },
-  { CHANNEL_SOURCE_CV1, CHANNEL_SOURCE_CV1, CHANNEL_SOURCE_LAST - 1, "source", channel_input_sources, settings::STORAGE_TYPE_U8},
-  { CHANNEL_TRIGGER_CONTINUOUS, 0, CHANNEL_TRIGGER_LAST - 1, "trigger", channel_trigger_sources, settings::STORAGE_TYPE_U8 },
+  { CHANNEL_SOURCE_CV1, CHANNEL_SOURCE_CV1, CHANNEL_SOURCE_LAST - 1, "source", channel_input_sources, settings::STORAGE_TYPE_U4 },
+  { CHANNEL_TRIGGER_CONTINUOUS, 0, CHANNEL_TRIGGER_LAST - 1, "trigger", channel_trigger_sources, settings::STORAGE_TYPE_U4 },
   { 1, 1, 16, "clock div", NULL, settings::STORAGE_TYPE_U8 },
   { 0, -5, 7, "transpose", NULL, settings::STORAGE_TYPE_I8 },
   { 0, -4, 4, "octave", NULL, settings::STORAGE_TYPE_I8 },
@@ -296,8 +298,8 @@ QuantizerChannel quantizer_channels[4];
 
 void QQ_init() {
   for (size_t i = 0; i < 4; ++i) {
-    quantizer_channels[i].Init();
-    quantizer_channels[i].apply_value(CHANNEL_SETTING_SOURCE, (int)i); // override
+    quantizer_channels[i].Init(static_cast<ChannelSource>(CHANNEL_SOURCE_CV1 + i),
+                               static_cast<ChannelTriggerSource>(CHANNEL_TRIGGER_TR1 + i));
   }
 
   qq_state.selected_channel = 0;
@@ -406,7 +408,7 @@ void QQ_menu() {
   UI_START_MENU(kStartX);
 
   int first_visible_param = qq_state.selected_param - 2;
-  int last_visible_param = channel.visible_params() - 1;
+  int last_visible_param = channel.visible_params();
   if (first_visible_param < CHANNEL_SETTING_SCALE)
     first_visible_param = CHANNEL_SETTING_SCALE;
   else if (first_visible_param + kUiVisibleItems > last_visible_param)
@@ -475,7 +477,7 @@ bool QQ_encoders() {
       }
     } else {
       int selected_param = qq_state.selected_param + value;
-      CONSTRAIN(selected_param, 0, selected.visible_params() - 2);
+      CONSTRAIN(selected_param, 0, selected.visible_params() - 1);
       qq_state.selected_param = selected_param;
     }
   }
