@@ -128,7 +128,8 @@ public:
     return values_[CHANNEL_SETTING_LOGISTIC_MAP_SEED];
   }
 
-   void Init(ChannelSource source, ChannelTriggerSource trigger_source) {
+  void Init(ChannelSource source, ChannelTriggerSource trigger_source) {
+
     InitDefaults();
     apply_value(CHANNEL_SETTING_SOURCE, source);
     apply_value(CHANNEL_SETTING_TRIGGER, trigger_source);
