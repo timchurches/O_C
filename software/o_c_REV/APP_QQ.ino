@@ -185,8 +185,8 @@ public:
           if (triggered) {
             uint32_t shift_register = turing_machine_.Clock();
             int32_t pitch;
+            uint8_t range = get_turing_range();
             if (quantizer_.enabled()) {
-              uint8_t range = get_turing_range();
     
               // To use full range of bits is something like:
               // uint32_t scaled = (static_cast<uint64_t>(shift_register) * static_cast<uint64_t>(range)) >> turing_length;
@@ -199,7 +199,7 @@ public:
               pitch = quantizer_.Lookup(64 + range / 2 - scaled);
               pitch += (get_root() + 60) << 7;
             } else {
-              pitch = shift_register;
+              pitch = (shift_register * range) >> 8;
             }  
             //pitch += 3 * 12 << 7; // offset for LUT range
             sample = DAC::pitch_to_dac(pitch, get_octave());
@@ -223,7 +223,7 @@ public:
               pitch = quantizer_.Lookup(64 + range / 2 - logistic_scaled);
               pitch += (get_root() + 60) << 7;
             } else {
-              pitch = logistic_map_x >> 8;;
+              pitch = (logistic_map_x * get_logistic_map_range()) >> 17;
             }  
             //pitch += 3 * 12 << 7; // offset for LUT range
             sample = DAC::pitch_to_dac(pitch, get_octave());
@@ -351,7 +351,7 @@ const char* const channel_trigger_sources[CHANNEL_TRIGGER_LAST] = {
 };
 
 const char* const channel_input_sources[CHANNEL_SOURCE_LAST] = {
-  "CV1", "CV2", "CV3", "CV4", "LFSR", "Logist"
+  "CV1", "CV2", "CV3", "CV4", "LFSR", "Logis"
 };
 
 SETTINGS_DECLARE(QuantizerChannel, CHANNEL_SETTING_LAST) {
@@ -365,7 +365,7 @@ SETTINGS_DECLARE(QuantizerChannel, CHANNEL_SETTING_LAST) {
   { 0, -4, 4, "octave", NULL, settings::STORAGE_TYPE_I8 },
   { 0, -999, 999, "fine", NULL, settings::STORAGE_TYPE_I16 },
   { 16, 0, 32, " LFSR length", NULL, settings::STORAGE_TYPE_U8 },
-  { 128, 0, 255, " LFSR P", NULL, settings::STORAGE_TYPE_U8 },
+  { 128, 0, 255, " LFSR p", NULL, settings::STORAGE_TYPE_U8 },
   { 24, 1, 120, " LFSR range", NULL, settings::STORAGE_TYPE_U8 },
   { 128, 1, 255, " Logistic r", NULL, settings::STORAGE_TYPE_U8 },
   { 24, 1, 120, " Logistic range", NULL, settings::STORAGE_TYPE_U8 },
