@@ -199,7 +199,7 @@ public:
               pitch = quantizer_.Lookup(64 + range / 2 - scaled);
               pitch += (get_root() + 60) << 7;
             } else {
-              pitch = (shift_register * range) >> 8;
+              pitch = (shift_register * range) >> 9;
             }  
             //pitch += 3 * 12 << 7; // offset for LUT range
             sample = DAC::pitch_to_dac(pitch, get_octave());
