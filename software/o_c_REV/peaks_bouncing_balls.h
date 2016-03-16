@@ -1,6 +1,8 @@
 // Copyright 2013 Olivier Gillet.
 //
 // Author: Olivier Gillet (ol.gillet@gmail.com)
+// Modifications for use in Ornaments & Crimes: Tim Churches (tim.churches@gmail.com)
+// Modifications copyright 2016 Tim Churches.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal

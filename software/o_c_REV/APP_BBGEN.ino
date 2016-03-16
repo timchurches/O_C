@@ -110,6 +110,8 @@ public:
     s[1] = USAT16(s[1]);
     s[2] = USAT16(s[2]);
     s[3] = USAT16(s[3]);
+    
+    bb_.Configure(s, peaks::CONTROL_MODE_FULL) ;
 
     // hard reset forces the bouncing ball to start at level_[0] on rising gate.
     bb_.set_hard_reset(get_hard_reset());
@@ -232,24 +234,24 @@ void BBGEN_init() {
 }
 
 size_t BBGEN_storageSize() {
-  return 4 * EnvelopeGenerator::storageSize();
+  return 4 * BouncingBall::storageSize();
 }
 
-size_t ENVGEN_save(void *storage) {
+size_t BBGEN_save(void *storage) {
   size_t s = 0;
-  for (auto &env : envgen.envelopes_)
-    s += env.Save(static_cast<byte *>(storage) + s);
+  for (auto &bb : bbgen.balls_)
+    s += bb.Save(static_cast<byte *>(storage) + s);
   return s;
 }
 
-size_t ENVGEN_restore(const void *storage) {
+size_t BBGEN_restore(const void *storage) {
   size_t s = 0;
-  for (auto &env : envgen.envelopes_)
-    s += env.Restore(static_cast<const byte *>(storage) + s);
+  for (auto &bb : bbgen.balls_)
+    s += bb.Restore(static_cast<const byte *>(storage) + s);
   return s;
 }
 
-void ENVGEN_handleEvent(OC::AppEvent event) {
+void BBGEN_handleEvent(OC::AppEvent event) {
   switch (event) {
     case OC::APP_EVENT_RESUME:
       encoder[LEFT].setPos(0);
@@ -261,7 +263,7 @@ void ENVGEN_handleEvent(OC::AppEvent event) {
   }
 }
 
-void ENVGEN_loop() {
+void BBGEN_loop() {
   if (_ENC && (millis() - _BUTTONS_TIMESTAMP > DEBOUNCE)) encoders();
   buttons(BUTTON_TOP);
   buttons(BUTTON_BOTTOM);
@@ -269,67 +271,22 @@ void ENVGEN_loop() {
   buttons(BUTTON_RIGHT);
 }
 
-int16_t preview_values[128];
-uint32_t preview_segments[peaks::kMaxNumSegments];
-uint32_t preview_loops[peaks::kMaxNumSegments];
-
-void ENVGEN_menu_preview() {
-  auto const &env = envgen.selected();
+void BBGEN_menu_settings() {
+  auto const &bb = bbgen.selected();
   UI_START_MENU(0);
 
-  graphics.print(EnvelopeGenerator::value_attr(ENV_SETTING_TYPE).value_names[env.get_type()]);
-  y += kUiLineH;
+  // probably redundant
+  int first_visible_param = bbgen.ui.selected_setting;
+  if (first_visible_param < BB_SETTING_INITIAL_AMPLITUDE)
+    first_visible_param = BB_SETTING_INITIAL_AMPLITUDE;
 
-  uint32_t current_phase = 0;
-  weegfx::coord_t x = 0;
-  size_t w = env.render_preview(preview_values, preview_segments, preview_loops, current_phase);
-  int16_t *data = preview_values;
-  while (w--) {
-    graphics.setPixel(x++, 58 - (*data++ >> 10));
-  }
-
-  uint32_t *segments = preview_segments;
-  while (*segments != 0xffffffff) {
-    weegfx::coord_t x = *segments++;
-    weegfx::coord_t value = preview_values[x] >> 10;
-    graphics.drawVLine(x, 58 - value, value);
-  }
-
-  uint32_t *loops = preview_loops;
-  if (*loops != 0xffffffff) {
-    weegfx::coord_t start = *loops++;
-    weegfx::coord_t end = *loops++;
-    graphics.setPixel(start, 60);
-    graphics.setPixel(end, 60);
-    graphics.drawHLine(start, 61, end - start + 1);
-  }
-
-  const int selected_segment = envgen.ui.selected_segment;
-  graphics.setPrintPos(2 + preview_segments[selected_segment], y);
-  graphics.print(env.get_segment_value(selected_segment));
-
-  graphics.drawHLine(0, 63, current_phase);
-}
-
-void ENVGEN_menu_settings() {
-  auto const &env = envgen.selected();
-  UI_START_MENU(0);
-  if (env.get_type() == envgen.ui.left_encoder_value)
-    graphics.drawBitmap8(2, y + 1, 4, OC::bitmap_indicator_4x8);
-  graphics.print(' ');
-  graphics.print(EnvelopeGenerator::value_attr(ENV_SETTING_TYPE).value_names[envgen.ui.left_encoder_value]);
-
-  int first_visible_param = envgen.ui.selected_setting - 2;
-  if (first_visible_param < ENV_SETTING_TRIGGER_INPUT)
-    first_visible_param = ENV_SETTING_TRIGGER_INPUT;
-
-  UI_BEGIN_ITEMS_LOOP(0, first_visible_param, ENV_SETTING_LAST, envgen.ui.selected_setting, 1);
-    UI_DRAW_EDITABLE(envgen.ui.editing);
-    UI_DRAW_SETTING(EnvelopeGenerator::value_attr(current_item), env.get_value(current_item), kUiWideMenuCol1X);
+  UI_BEGIN_ITEMS_LOOP(0, first_visible_param, BB_SETTING_LAST, bbgen.ui.selected_setting, 1);
+    UI_DRAW_EDITABLE(bbgen.ui.editing);
+    UI_DRAW_SETTING(BouncingBall::value_attr(current_item), bb.get_value(current_item), kUiWideMenuCol1X);
   UI_END_ITEMS_LOOP();
 }
 
-void ENVGEN_menu() {
+void BBGEN_menu() {
   GRAPHICS_BEGIN_FRAME(false); // no frame, no problem
   static const weegfx::coord_t kStartX = 0;
   UI_DRAW_TITLE(kStartX);
@@ -338,88 +295,61 @@ void ENVGEN_menu() {
     graphics.setPrintPos(x + 6, 2);
     graphics.print((char)('A' + i));
     graphics.setPrintPos(x + 14, 2);
-    if (i == envgen.ui.selected_channel) {
+    if (i == bbgen.ui.selected_channel) {
       graphics.invertRect(x, 0, 32, 11);
     }
   }
 
-  if (QuadEnvelopeGenerator::MODE_SELECT_CHANNEL == envgen.ui.left_edit_mode)
-    ENVGEN_menu_preview();
-  else
-    ENVGEN_menu_settings();
+  BBGEN_menu_settings();
 
   // TODO Draw phase anyway?
   GRAPHICS_END_FRAME();
 }
 
-void ENVGEN_topButton() {
-  auto &selected_env = envgen.selected();
-  selected_env.change_value(ENV_SETTING_SEG1_VALUE + envgen.ui.selected_segment, 32);
+void BBGEN_topButton() {
+  auto &selected_bb = bbgen.selected();
+  selected_bb.change_value(BB_SETTING_INITIAL_AMPLITUDE + bbgen.ui.selected_segment, 32);
 }
 
-void ENVGEN_lowerButton() {
-  auto &selected_env = envgen.selected();
-  selected_env.change_value(ENV_SETTING_SEG1_VALUE + envgen.ui.selected_segment, -32); 
+void BBGEN_lowerButton() {
+  auto &selected_bb = bbgen.selected();
+  selected_bb.change_value(BB_SETTING_INITIAL_AMPLITUDE + bbgen.ui.selected_segment, -32); 
 }
 
-void ENVGEN_rightButton() {
-
-  if (QuadEnvelopeGenerator::MODE_SELECT_CHANNEL == envgen.ui.left_edit_mode) {
-    auto const &selected_env = envgen.selected();
-    int segment = envgen.ui.selected_segment + 1;
-    if (segment > selected_env.active_segments() - 1)
-      segment = 0;
-    if (segment != envgen.ui.selected_segment) {
-      envgen.ui.selected_segment = segment;
-      encoder[RIGHT].setPos(0);
-    }
-  } else {
-    envgen.ui.editing = !envgen.ui.editing;
-  }
+void BBGEN_rightButton() {
+    bbgen.ui.editing = !bbgen.ui.editing;
+    encoder[LEFT].setPos(0);
+    encoder[RIGHT].setPos(0);
 }
 
-void ENVGEN_leftButton() {
-  if (QuadEnvelopeGenerator::MODE_EDIT_SETTINGS == envgen.ui.left_edit_mode) {
-    envgen.selected().apply_value(ENV_SETTING_TYPE, envgen.ui.left_encoder_value);
-    envgen.ui.left_edit_mode = QuadEnvelopeGenerator::MODE_SELECT_CHANNEL;
-  } else {
-    envgen.ui.left_edit_mode = QuadEnvelopeGenerator::MODE_EDIT_SETTINGS;
-    envgen.ui.left_encoder_value = envgen.selected().get_type();
-  }
-  encoder[LEFT].setPos(0);
-  encoder[RIGHT].setPos(0);
-}
+void BBGEN_leftButton() { }
 
-void ENVGEN_leftButtonLong() { }
-bool ENVGEN_encoders() {
+void BBGEN_leftButtonLong() { }
+
+bool BBGEN_encoders() {
   long left_value = encoder[LEFT].pos();
   long right_value = encoder[RIGHT].pos();
   bool changed = left_value || right_value;
 
-  if (QuadEnvelopeGenerator::MODE_SELECT_CHANNEL == envgen.ui.left_edit_mode) {
+  if (QuadBouncingBalls::MODE_SELECT_CHANNEL == bbgen.ui.left_edit_mode) {
     if (left_value) {
-      left_value += envgen.ui.selected_channel;
+      left_value += bbgen.ui.selected_channel;
       CONSTRAIN(left_value, 0, 3);
-      envgen.ui.selected_channel = left_value;
+      bbgen.ui.selected_channel = left_value;
     }
     if (right_value) {
-      auto &selected_env = envgen.selected();
-      selected_env.change_value(ENV_SETTING_SEG1_VALUE + envgen.ui.selected_segment, right_value);
+      auto &selected_bb = bbgen.selected();
+      selected_bb.change_value(BB_SETTING_INITIAL_AMPLITUDE + bbgen.ui.selected_segment, right_value);
     }
   } else {
-    if (left_value) {
-      left_value += envgen.ui.left_encoder_value;
-      CONSTRAIN(left_value, ENV_TYPE_FIRST, ENV_TYPE_LAST - 1);
-      envgen.ui.left_encoder_value = left_value;
-    }
     if (right_value) {
-      if (envgen.ui.editing) {
-        auto &selected_env = envgen.selected();
-        selected_env.change_value(envgen.ui.selected_setting, right_value);
+      if (bbgen.ui.editing) {
+        auto &selected_bb = bbgen.selected();
+        selected_bb.change_value(bbgen.ui.selected_setting, right_value);
       } else {
-        right_value += envgen.ui.selected_setting;
-        CONSTRAIN(right_value, ENV_SETTING_TRIGGER_INPUT, ENV_SETTING_LAST - 1);
-        envgen.ui.selected_setting = right_value;
+        right_value += bbgen.ui.selected_setting;
+        CONSTRAIN(right_value, BB_SETTING_INITIAL_AMPLITUDE, ENV_SETTING_LAST - 1);
+        bbgen.ui.selected_setting = right_value;
       }
     }
   }
@@ -429,12 +359,12 @@ bool ENVGEN_encoders() {
   return changed;
 }
 
-void ENVGEN_screensaver() {
+void BBGEN_screensaver() {
   GRAPHICS_BEGIN_FRAME(false);
   scope_render();
   GRAPHICS_END_FRAME();
 }
 
-void FASTRUN ENVGEN_isr() {
-  envgen.ISR();
+void FASTRUN BBGEN_isr() {
+  bbgen.ISR();
 }
