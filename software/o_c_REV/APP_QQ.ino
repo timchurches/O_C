@@ -9,10 +9,10 @@
 #include "util/util_logistic_map.h"
 #include "braids_quantizer.h"
 #include "braids_quantizer_scales.h"
+#include "OC_menus.h"
 #include "OC_scales.h"
 #include "OC_scale_edit.h"
 #include "OC_strings.h"
-#include "util_ui.h"
 
 // TODO Extend calibration to get exact octave spacing for inputs?
 
@@ -184,7 +184,6 @@ public:
           turing_machine_.set_probability(probability);  
           if (triggered) {
             uint32_t shift_register = turing_machine_.Clock();
-            int32_t pitch;
             uint8_t range = get_turing_range();
             if (quantizer_.enabled()) {
     
@@ -196,13 +195,19 @@ public:
               // TODO This is just a bodge to get things working;
               // I think we can convert the quantizer codebook to work in a better range
               // The same things happen in all apps that use it, so can be simplified/unified.
-              pitch = quantizer_.Lookup(64 + range / 2 - scaled);
+              int32_t pitch = quantizer_.Lookup(64 + range / 2 - scaled);
               pitch += (get_root() + 60) << 7;
+              //pitch += 3 * 12 << 7; // offset for LUT range
+              sample = DAC::pitch_to_dac(pitch, get_octave());
             } else {
-              pitch = (shift_register * range) >> 9;
+              // We dont' need a calibrated value here, really
+              int octave = get_octave() + 3;
+              CONSTRAIN(octave, 0, 6);
+              sample = OC::calibration_data.dac.octaves[octave] + (get_transpose() << 7); 
+              // range is actually 120 (10 oct) but 65535 / 128 is close enough
+              sample += multiply_u32xu32_rshift32((static_cast<uint32_t>(range) * 65535U) >> 7, shift_register << (32 - get_turing_length()));
+              sample = USAT16(sample);
             }  
-            //pitch += 3 * 12 << 7; // offset for LUT range
-            sample = DAC::pitch_to_dac(pitch, get_octave());
           }
         }
         break;
@@ -213,20 +218,22 @@ public:
           logistic_map_.set_r(logistic_map_r);  
           if (triggered) {
             int64_t logistic_map_x = logistic_map_.Clock();
-            int32_t pitch;
-            if (quantizer_.enabled()) {
-              uint8_t range = get_logistic_map_range();
-    
+            uint8_t range = get_logistic_map_range();
+            if (quantizer_.enabled()) {   
               uint32_t logistic_scaled = (logistic_map_x * range) >> 24;
 
               // See above, may need tweaking    
-              pitch = quantizer_.Lookup(64 + range / 2 - logistic_scaled);
+              int32_t pitch = quantizer_.Lookup(64 + range / 2 - logistic_scaled);
               pitch += (get_root() + 60) << 7;
+              //pitch += 3 * 12 << 7; // offset for LUT range
+              sample = DAC::pitch_to_dac(pitch, get_octave());
             } else {
-              pitch = (logistic_map_x * get_logistic_map_range()) >> 17;
-            }  
-            //pitch += 3 * 12 << 7; // offset for LUT range
-            sample = DAC::pitch_to_dac(pitch, get_octave());
+              int octave = get_octave() + 3;
+              CONSTRAIN(octave, 0, 6);
+              sample = OC::calibration_data.dac.octaves[octave] + (get_transpose() << 7);
+              sample += multiply_u32xu32_rshift24((static_cast<uint32_t>(range) * 65535U) >> 7, logistic_map_x);
+              sample = USAT16(sample);
+            }
           }
         }
         break;
@@ -248,7 +255,7 @@ public:
     if (changed) {
       MENU_REDRAW = 1;
       last_output_ = sample;
-      DAC::set(dac_channel, last_output_ + get_fine());
+      DAC::set(dac_channel, sample + get_fine());
     }
     trigger_display_.Update(1, continous ? changed : triggered);
   }
@@ -366,7 +373,7 @@ SETTINGS_DECLARE(QuantizerChannel, CHANNEL_SETTING_LAST) {
   { 0, -5, 7, "transpose", NULL, settings::STORAGE_TYPE_I8 },
   { 0, -4, 4, "octave", NULL, settings::STORAGE_TYPE_I8 },
   { 0, -999, 999, "fine", NULL, settings::STORAGE_TYPE_I16 },
-  { 16, 0, 32, " LFSR length", NULL, settings::STORAGE_TYPE_U8 },
+  { 16, 1, 32, " LFSR length", NULL, settings::STORAGE_TYPE_U8 },
   { 128, 0, 255, " LFSR p", NULL, settings::STORAGE_TYPE_U8 },
   { 24, 1, 120, " LFSR range", NULL, settings::STORAGE_TYPE_U8 },
   { 128, 1, 255, " Logistic r", NULL, settings::STORAGE_TYPE_U8 },
@@ -475,7 +482,7 @@ void draw_mask(weegfx::coord_t y, uint32_t mask, size_t count) {
 void QQ_menu() {
   GRAPHICS_BEGIN_FRAME(false); // no frame, no problem
 
-  graphics.setFont(UI_DEFAULT_FONT);
+  graphics.setFont(MENU_DEFAULT_FONT);
 
   static const weegfx::coord_t kStartX = 0;
 

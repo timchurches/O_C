@@ -2,7 +2,7 @@
 #include "OC_ADC.h"
 #include "OC_config.h"
 #include "OC_debug.h"
-#include "util_ui.h"
+#include "OC_menus.h"
 #include "extern/dspinst.h"
 
 extern void POLYLFO_debug();
@@ -10,26 +10,25 @@ extern void LORENZ_debug();
 
 namespace OC {
 
-enum DebugMenu {
-  DEBUG_MENU_CORE,
-  DEBUG_MENU_GFX,
-  DEBUG_MENU_ADC,
-  DEBUG_MENU_POLYLFO,
-  DEBUG_MENU_LORENZ,
-  DEBUG_MENU_LAST
-};
+namespace DEBUG {
+  SmoothedValue<uint32_t, 16> ISR_cycles;
+
+  void Init() {
+    debug::CycleMeasurement::Init();
+    DebugPins::Init();
+  }
+}
 
 static void debug_menu_core() {
 
-  uint32_t cycles = OC::CORE::ISR_cycles.value();
+  uint32_t cycles = DEBUG::ISR_cycles.value();
   uint32_t isr_us = multiply_u32xu32_rshift32(cycles, (1ULL << 32) / (F_CPU / 1000000));
 
+  graphics.setPrintPos(2, 12);
+  graphics.printf("F_CPU: %uMHz", F_CPU / 1000 / 1000, OC_CORE_TIMER_RATE);
   graphics.setPrintPos(2, 22);
-  graphics.printf("%uMHz, ISR %uus", F_CPU / 1000 / 1000, OC_CORE_TIMER_RATE);
+  graphics.printf("CORE :%3u/%uus %2u%%", isr_us, OC_CORE_TIMER_RATE, (isr_us * 100) /  OC_CORE_TIMER_RATE);
   graphics.setPrintPos(2, 32);
-  graphics.printf("ISR us: %u", isr_us);
-  graphics.setPrintPos(2, 42);
-  graphics.printf("ISR %% : %u", (isr_us * 100) /  OC_CORE_TIMER_RATE);
 }
 
 static void debug_menu_gfx() {
@@ -58,44 +57,43 @@ static void debug_menu_adc() {
 //      graphics.setPrintPos(2, 52); graphics.print(OC::ADC::fail_flag1());
 }
 
-struct {
-  DebugMenu menu;
+struct DebugMenu {
   const char *title;
   void (*display_fn)();
-}
-const debug_menus[DEBUG_MENU_LAST] = {
-  { DEBUG_MENU_CORE, " CORE", debug_menu_core },
-  { DEBUG_MENU_GFX, " GFX", debug_menu_gfx },
-  { DEBUG_MENU_ADC, " ADC", debug_menu_adc },
-  { DEBUG_MENU_POLYLFO, " POLYLFO", POLYLFO_debug },
-  { DEBUG_MENU_LORENZ, " LORENZ", LORENZ_debug },
 };
 
+static const DebugMenu debug_menus[] = {
+  { " CORE", debug_menu_core },
+  { " GFX", debug_menu_gfx },
+  { " ADC", debug_menu_adc },
+  { " POLYLFO", POLYLFO_debug },
+  { " LORENZ", LORENZ_debug },
+  { nullptr, nullptr }
+};
 
 void debug_menu() {
-
-  DebugMenu current_menu = DEBUG_MENU_CORE;
-  while (true) {
+  const DebugMenu *current_menu = &debug_menus[0];
+  bool exit_loop = false;
+  while (!exit_loop) {
 
     GRAPHICS_BEGIN_FRAME(false);
       graphics.setPrintPos(2, 2);
-      graphics.print((int)current_menu + 1); graphics.print("/"); graphics.print((int)DEBUG_MENU_LAST);
-      graphics.print(debug_menus[current_menu].title);
-      debug_menus[current_menu].display_fn();
+      graphics.printf("%d/%u", (int)(current_menu - &debug_menus[0]) + 1, ARRAY_SIZE(debug_menus) - 1);
+      graphics.print(current_menu->title);
+      current_menu->display_fn();
     GRAPHICS_END_FRAME();
 
     button_right.read();
     if (button_right.event())
-      break;
+      exit_loop = true;
 
     button_left.read();
     if (button_left.event()) {
-      if (current_menu < DEBUG_MENU_LAST - 1)
-        current_menu = static_cast<DebugMenu>(current_menu + 1);
-      else
-        current_menu = DEBUG_MENU_CORE;
+      ++current_menu;
+      if (!current_menu->title || !current_menu->display_fn)
+        current_menu = &debug_menus[0];
     }
   }
 }
 
-};
+}; // namespace OC
