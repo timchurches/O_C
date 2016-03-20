@@ -34,7 +34,7 @@
 #define FRAMES_RESOURCES_H_
 
 
-// #include "stmlib/stmlib.h"
+#include <stdint.h>
 
 
 
@@ -48,7 +48,7 @@ extern const uint16_t* lookup_table_table[];
 
 extern const uint32_t* lookup_table_hr_table[];
 
-extern const uint16_t* wt_table[];
+extern const uint8_t* wt_table[];
 
 extern const uint16_t lut_easing_in_quartic[];
 extern const uint16_t lut_easing_out_quartic[];
@@ -58,7 +58,7 @@ extern const uint16_t lut_response_balance[];
 extern const uint16_t lut_vca_linear[];
 extern const uint16_t lut_exponential[];
 extern const uint32_t lut_increments[];
-extern const uint16_t wt_lfo_waveforms[];
+extern const uint8_t wt_lfo_waveforms[];
 #define STR_DUMMY 0  // dummy
 #define LUT_EASING_IN_QUARTIC 0
 #define LUT_EASING_IN_QUARTIC_SIZE 1025
@@ -77,7 +77,7 @@ extern const uint16_t wt_lfo_waveforms[];
 #define LUT_INCREMENTS 0
 #define LUT_INCREMENTS_SIZE 159
 #define WT_LFO_WAVEFORMS 0
-#define WT_LFO_WAVEFORMS_SIZE 36882
+#define WT_LFO_WAVEFORMS_SIZE 4626
 
 }  // namespace frames
 
