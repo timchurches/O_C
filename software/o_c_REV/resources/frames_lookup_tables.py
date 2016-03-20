@@ -109,5 +109,5 @@ Phase increment lookup table for LFO mode
 ----------------------------------------------------------------------------"""
 
 frequency = 110 * 2 ** (numpy.arange(0, 159.0) / 158.0 - 13)
-phase_increment = frequency / 24000 * (1 << 32)
+phase_increment = frequency / 16666 * (1 << 32)
 lookup_tables_32 = [('increments', numpy.round(phase_increment).astype(int))]

@@ -31,7 +31,7 @@
 import numpy
 
 
-def scale(x, min=0, max=255, center=True):
+def scale(x, min=0, max=65535, center=True):
   mx = x.max()
   mn = x.min()
   x = (x - mn) / (mx - mn)
@@ -44,7 +44,7 @@ def scale(x, min=0, max=255, center=True):
 
 custom_lfos = []
 
-t = numpy.arange(0, 256) / 256.0
+t = numpy.arange(0, 2048) / 2048.0
 ramp = t
 triangle = 2 * t * (t < 0.5) + (2.0 - 2 * t) * (t >= 0.5)
 square = (t < 0.5)
@@ -77,7 +77,7 @@ triangle_3 = numpy.cumsum(numpy.sign(numpy.diff(sine_3)))
 custom_lfos.append(numpy.array([0] + list(triangle_3)))
 
 for fold_amount in [1.0, 0.5]:
-  rotate = (numpy.arange(0, 256) + 128) % 256
+  rotate = (numpy.arange(0, 2048) + 1024) % 2048
   fold = (1 + fold_amount) * bipolar_triangle[rotate]
   fold[fold > 1.0] = 2.0 - fold[fold > 1.0]
   fold[fold < -1.0] = -2.0 - fold[fold < -1.0]
@@ -86,14 +86,14 @@ for fold_amount in [1.0, 0.5]:
 spike = 2 ** (4 * triangle) - 1
 custom_lfos.append(spike)
 numpy.random.seed(999)
-custom_lfos.append(numpy.random.random((256, 1)).ravel())
+custom_lfos.append(numpy.random.random((2048, 1)).ravel())
 custom_lfos.append(sine)
 
-lfo_waveforms = numpy.zeros((257 * len(custom_lfos),), dtype=numpy.uint8)
+lfo_waveforms = numpy.zeros((2049 * len(custom_lfos),), dtype=numpy.uint8)
 import pylab
 for i, values in enumerate(custom_lfos):
   values = scale(values)
-  lfo_waveforms[i * 257: i * 257 + 256] = values
-  lfo_waveforms[i * 257 + 256] = values[0]
+  lfo_waveforms[i * 2049: i * 2049 + 2048] = values
+  lfo_waveforms[i * 2049 + 2048] = values[0]
 
 waveforms = [('lfo_waveforms', lfo_waveforms)]

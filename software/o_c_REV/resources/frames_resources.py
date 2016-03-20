@@ -79,5 +79,5 @@ resources = [
   (lookup_tables.lookup_tables_32,
    'lookup_table_hr', 'LUT', 'uint32_t', int, False),
   (waveforms.waveforms,
-   'wt', 'WT', 'uint8_t', int, False),
+   'wt', 'WT', 'uint16_t', int, False),
 ]
