@@ -188,7 +188,7 @@ void PolyLfo::Render(int32_t frequency, bool reset_phase) {
     }
   }
   
-  const uint8_t* sine = &wt_lfo_waveforms[17 * 257];
+  const uint16_t* sine = &wt_lfo_waveforms[17 * 2049];
   
   uint16_t wavetable_index = shape_;
   // Wavetable lookup
@@ -199,11 +199,11 @@ void PolyLfo::Render(int32_t frequency, bool reset_phase) {
     } else {
       phase += value_[(i + kNumChannels - 1) % kNumChannels] * -coupling_;
     }
-    const uint8_t* a = &wt_lfo_waveforms[(wavetable_index >> 12) * 257];
-    const uint8_t* b = a + 257;
-    int16_t value = Crossfade(a, b, phase, wavetable_index << 4);
-    value_[i] = Interpolate824(sine, phase);
-    level_[i] = (value + 32768) >> 8;
+    const uint16_t* a = &wt_lfo_waveforms[(wavetable_index >> 12) * 2049];
+    const uint16_t* b = a + 2049;
+    int32_t value = Crossfade(a, b, phase, wavetable_index << 4);
+    value_[i] = Interpolate1624(sine, phase);
+    level_[i] = (value + 32768) ;
     dac_code_[i] = value + 32768; //Keyframer::ConvertToDacCode(value + 32768, 0);
     wavetable_index += shape_spread_;
   }
@@ -214,9 +214,9 @@ void PolyLfo::RenderPreview(uint16_t shape, uint16_t *buffer, size_t size) {
   uint32_t phase = 0;
   uint32_t phase_increment = (0xff << 24) / size;
   while (size--) {
-    const uint8_t* a = &wt_lfo_waveforms[(wavetable_index >> 12) * 257];
-    const uint8_t* b = a + 257;
-    int16_t value = Crossfade(a, b, phase, wavetable_index << 4);
+    const int32_t* a = &wt_lfo_waveforms[(wavetable_index >> 12) * 2049];
+    const int32_t* b = a + 2049;
+    int32_t value = Crossfade(a, b, phase, wavetable_index << 4);
     *buffer++ = value + 32768;
     phase += phase_increment;
   }

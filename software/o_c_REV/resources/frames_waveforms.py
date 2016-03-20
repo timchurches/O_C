@@ -36,7 +36,7 @@ def scale(x, min=0, max=65535, center=True):
   mn = x.min()
   x = (x - mn) / (mx - mn)
   x = numpy.round(x * (max - min) + min)
-  target_type = numpy.uint8
+  target_type = numpy.uint16
   x[x < numpy.iinfo(target_type).min] = numpy.iinfo(target_type).min
   x[x > numpy.iinfo(target_type).max] = numpy.iinfo(target_type).max
   return x.astype(target_type)
@@ -89,7 +89,7 @@ numpy.random.seed(999)
 custom_lfos.append(numpy.random.random((2048, 1)).ravel())
 custom_lfos.append(sine)
 
-lfo_waveforms = numpy.zeros((2049 * len(custom_lfos),), dtype=numpy.uint8)
+lfo_waveforms = numpy.zeros((2049 * len(custom_lfos),), dtype=numpy.uint16)
 import pylab
 for i, values in enumerate(custom_lfos):
   values = scale(values)

@@ -30,7 +30,7 @@
 // make resources
 
 
-#include "frames_resources.h"
+#include "frames/resources.h"
 
 namespace frames {
 

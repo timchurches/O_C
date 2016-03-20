@@ -66,8 +66,8 @@ includes = """
 #include "stmlib/stmlib.h"
 """
 
-import lookup_tables
-import waveforms
+import frames_lookup_tables as lookup_tables
+import frames_waveforms as waveforms
 
 types = ['uint8_t', 'uint16_t']
 create_specialized_manager = True
