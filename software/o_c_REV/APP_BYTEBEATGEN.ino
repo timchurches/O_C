@@ -108,7 +108,7 @@ public:
 
     int32_t s[kMaxByteBeatParameters];
     s[0] = SCALE8_16(static_cast<int32_t>(get_equation() << 5));
-    s[1] = SCALE8_16(static_cast<int32_t>((get_speed() - 1) << 2));
+    s[1] = SCALE8_16(static_cast<int32_t>(get_speed()));
     s[2] = SCALE8_16(static_cast<int32_t>(get_p0()));
     s[3] = SCALE8_16(static_cast<int32_t>(get_p1()));
     s[4] = SCALE8_16(static_cast<int32_t>(get_p2()));
@@ -169,7 +169,7 @@ const char* const bytebeat_cv_mapping_names[BYTEBEAT_CV_MAPPING_LAST] = {
 
 SETTINGS_DECLARE(ByteBeat, BYTEBEAT_SETTING_LAST) {
   { 0, 0, 7, "Equation", NULL, settings::STORAGE_TYPE_U8 },
-  { 1, 1, 64, "Speed", NULL, settings::STORAGE_TYPE_U8 },
+  { 128, 0, 255, "Speed", NULL, settings::STORAGE_TYPE_U8 },
   { 128, 0, 255, "Parameter 0", NULL, settings::STORAGE_TYPE_U8 }, 
   { 128, 0, 255, "Parameter 1", NULL, settings::STORAGE_TYPE_U8 }, 
   { 128, 0, 255, "Parameter 2", NULL, settings::STORAGE_TYPE_U8 }, 

@@ -58,7 +58,7 @@ int16_t ByteBeat::ProcessSingleSample(uint8_t control) {
   uint32_t q ;
   uint8_t j ;
   
-  uint16_t bytepitch = (65535 - speed_) >> 9 ; // was 11
+  uint16_t bytepitch = (65535 - speed_) >> 7 ; // was 11
   if (bytepitch < 1) {
     bytepitch = 1;
   }
@@ -72,7 +72,7 @@ int16_t ByteBeat::ProcessSingleSample(uint8_t control) {
       // }
   }
 
-  for (uint8_t i = 0; i < 8 ; ++i) {
+  for (uint8_t i = 0; i < 32 ; ++i) {
     ++ phase_ ;     
     if (phase_ % bytepitch == 0) ++t_; 
   }
