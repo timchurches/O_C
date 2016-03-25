@@ -164,7 +164,7 @@ void ByteBeat::Init(OC::DigitalInput default_trigger) {
 }
 
 const char* const bytebeat_cv_mapping_names[BYTEBEAT_CV_MAPPING_LAST] = {
-  "off", "equ", "spd", "p1", "p2", "p3" 
+  "off", "equ", "spd", "p0", "p1", "p2" 
 };
 
 SETTINGS_DECLARE(ByteBeat, BYTEBEAT_SETTING_LAST) {
