@@ -188,7 +188,7 @@ public:
     ui.editing = false;
     ui.selected_channel = 0;
     ui.selected_segment = 0;
-    ui.selected_setting = BB_SETTING_TRIGGER_INPUT;
+    ui.selected_setting = BB_SETTING_GRAVITY;
   }
 
   void ISR() {

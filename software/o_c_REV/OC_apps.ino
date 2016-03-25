@@ -26,6 +26,7 @@ OC::App available_apps[] = {
   DECLARE_APP('L','R', "Low-rents", LORENZ, LORENZ_isr),
   DECLARE_APP('E','G', "Piqued", ENVGEN, ENVGEN_isr),
   DECLARE_APP('B','B', "Dialectic Ping Pong", BBGEN, BBGEN_isr),
+  DECLARE_APP('V','Z', "Viznutcracker Sweet", BYTEBEATGEN, BYTEBEATGEN_isr),
 };
 
 static constexpr int NUM_AVAILABLE_APPS = ARRAY_SIZE(available_apps);
