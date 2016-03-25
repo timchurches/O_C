@@ -10,6 +10,7 @@
 
 enum ByteBeatSettings {
   BYTEBEAT_SETTING_EQUATION,
+  BYTEBEAT_SETTING_STEPMODE,
   BYTEBEAT_SETTING_SPEED,
   BYTEBEAT_SETTING_P0,
   BYTEBEAT_SETTING_P1,
@@ -38,7 +39,7 @@ enum ByteBeatCVMapping {
 class ByteBeat : public settings::SettingsBase<ByteBeat, BYTEBEAT_SETTING_LAST> {
 public:
 
-  static constexpr int kMaxByteBeatParameters = 5;
+  static constexpr int kMaxByteBeatParameters = 6;
 
   void Init(OC::DigitalInput default_trigger);
 
@@ -64,6 +65,10 @@ public:
 
   uint8_t get_equation() const {
     return values_[BYTEBEAT_SETTING_EQUATION];
+  }
+
+  bool get_stepmode() const {
+    return values_[BYTEBEAT_SETTING_STEPMODE];
   }
 
   uint8_t get_speed() const {
@@ -130,7 +135,7 @@ public:
     s_[3] = s[3] ;
     s_[4] = s[4] ;
         
-    bytebeat_.Configure(s) ; 
+    bytebeat_.Configure(s, get_stepmode()) ; 
 
     OC::DigitalInput trigger_input = get_trigger_input();
     uint8_t gate_state = 0;
@@ -169,6 +174,7 @@ const char* const bytebeat_cv_mapping_names[BYTEBEAT_CV_MAPPING_LAST] = {
 
 SETTINGS_DECLARE(ByteBeat, BYTEBEAT_SETTING_LAST) {
   { 0, 0, 7, "Equation", NULL, settings::STORAGE_TYPE_U8 },
+  { 0, 0, 1, "Step mode", OC::Strings::no_yes, settings::STORAGE_TYPE_U4 },
   { 128, 0, 255, "Speed", NULL, settings::STORAGE_TYPE_U8 },
   { 128, 0, 255, "Parameter 0", NULL, settings::STORAGE_TYPE_U8 }, 
   { 128, 0, 255, "Parameter 1", NULL, settings::STORAGE_TYPE_U8 }, 

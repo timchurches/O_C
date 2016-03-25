@@ -50,16 +50,21 @@ class ByteBeat {
   void Init();
   int16_t ProcessSingleSample(uint8_t control);
  
-  void Configure(int32_t* parameter) {
+  void Configure(int32_t* parameter, bool stepmode) {
       set_equation(parameter[0]);
       set_speed(parameter[1]);
       set_p0(parameter[2]);
       set_p1(parameter[3]);
       set_p2(parameter[4]);
+      set_stepmode(stepmode) ;
   }
 
    inline void set_equation(int32_t equation) {
     equation_ = equation ;
+  }
+
+   inline void set_stepmode(bool stepmode) {
+    stepmode_ = stepmode ;
   }
 
   inline void set_speed(int32_t speed) {
@@ -94,6 +99,7 @@ class ByteBeat {
   uint16_t p2_;
   uint32_t t_; 
   uint32_t phase_;
+  bool stepmode_ ;
 
   uint8_t equation_index_ ;
   
