@@ -56,6 +56,8 @@ class ByteBeat {
       set_p0(parameter[2]);
       set_p1(parameter[3]);
       set_p2(parameter[4]);
+      set_loop_start(parameter[5]);
+      set_loop_end(parameter[6]);
       set_stepmode(stepmode) ;
   }
 
@@ -83,6 +85,14 @@ class ByteBeat {
     p2_ = parameter;
   }
 
+  inline void set_loop_start(int32_t parameter) {
+    loop_start_ = parameter << 16 ;
+  }
+
+  inline void set_loop_end(int32_t parameter) {
+    loop_end_ = parameter << 16 ;
+  }
+
   inline bool FillBuffer() const {
     return true;
   }
@@ -99,6 +109,8 @@ class ByteBeat {
   uint16_t p2_;
   uint32_t t_; 
   uint32_t phase_;
+  uint32_t loop_start_ ;
+  uint32_t loop_end_ ;
   bool stepmode_ ;
 
   uint8_t equation_index_ ;

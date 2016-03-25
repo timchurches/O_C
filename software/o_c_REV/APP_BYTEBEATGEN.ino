@@ -15,6 +15,8 @@ enum ByteBeatSettings {
   BYTEBEAT_SETTING_P0,
   BYTEBEAT_SETTING_P1,
   BYTEBEAT_SETTING_P2,
+  BYTEBEAT_SETTING_LOOP_START,
+  BYTEBEAT_SETTING_LOOP_END,
   BYTEBEAT_SETTING_TRIGGER_INPUT,
   BYTEBEAT_SETTING_CV1,
   BYTEBEAT_SETTING_CV2,
@@ -39,7 +41,7 @@ enum ByteBeatCVMapping {
 class ByteBeat : public settings::SettingsBase<ByteBeat, BYTEBEAT_SETTING_LAST> {
 public:
 
-  static constexpr int kMaxByteBeatParameters = 6;
+  static constexpr int kMaxByteBeatParameters = 7;
 
   void Init(OC::DigitalInput default_trigger);
 
@@ -87,6 +89,14 @@ public:
     return values_[BYTEBEAT_SETTING_P2];
   }
 
+  uint8_t get_loop_start() const {
+    return values_[BYTEBEAT_SETTING_LOOP_START];
+  }
+
+  uint8_t get_loop_end() const {
+    return values_[BYTEBEAT_SETTING_LOOP_END];
+  }
+
   int32_t get_s(uint8_t param) {
     return s_[param] ; 
   }
@@ -112,11 +122,13 @@ public:
   void Update(uint32_t triggers, const int32_t cvs[ADC_CHANNEL_LAST]) {
 
     int32_t s[kMaxByteBeatParameters];
-    s[0] = SCALE8_16(static_cast<int32_t>(get_equation() << 5));
+    s[0] = SCALE8_16(static_cast<int32_t>(get_equation() << 6));
     s[1] = SCALE8_16(static_cast<int32_t>(get_speed()));
     s[2] = SCALE8_16(static_cast<int32_t>(get_p0()));
     s[3] = SCALE8_16(static_cast<int32_t>(get_p1()));
     s[4] = SCALE8_16(static_cast<int32_t>(get_p2()));
+    s[5] = SCALE8_16(static_cast<int32_t>(get_loop_start()));
+    s[6] = SCALE8_16(static_cast<int32_t>(get_loop_end()));
 
     apply_cv_mapping(BYTEBEAT_SETTING_CV1, cvs, s);
     apply_cv_mapping(BYTEBEAT_SETTING_CV2, cvs, s);
@@ -128,12 +140,16 @@ public:
     s[2] = USAT16(s[2]);
     s[3] = USAT16(s[3]);
     s[4] = USAT16(s[4]);
+    s[5] = USAT16(s[5]);
+    s[6] = USAT16(s[6]);
 
     s_[0] = s[0] ;
     s_[1] = s[1] ;
     s_[2] = s[2] ;
     s_[3] = s[3] ;
     s_[4] = s[4] ;
+    s_[5] = s[5] ;
+    s_[6] = s[6] ;
         
     bytebeat_.Configure(s, get_stepmode()) ; 
 
@@ -172,13 +188,19 @@ const char* const bytebeat_cv_mapping_names[BYTEBEAT_CV_MAPPING_LAST] = {
   "off", "equ", "spd", "p0", "p1", "p2" 
 };
 
+const char* const bytebeat_equation_names[] = {
+  "hope", "love", "life", "pain" 
+};
+
 SETTINGS_DECLARE(ByteBeat, BYTEBEAT_SETTING_LAST) {
-  { 0, 0, 7, "Equation", NULL, settings::STORAGE_TYPE_U8 },
+  { 0, 0, 3, "Equation", bytebeat_equation_names, settings::STORAGE_TYPE_U8 },
   { 0, 0, 1, "Step mode", OC::Strings::no_yes, settings::STORAGE_TYPE_U4 },
-  { 128, 0, 255, "Speed", NULL, settings::STORAGE_TYPE_U8 },
+  { 255, 0, 255, "Speed", NULL, settings::STORAGE_TYPE_U8 },
   { 128, 0, 255, "Parameter 0", NULL, settings::STORAGE_TYPE_U8 }, 
   { 128, 0, 255, "Parameter 1", NULL, settings::STORAGE_TYPE_U8 }, 
   { 128, 0, 255, "Parameter 2", NULL, settings::STORAGE_TYPE_U8 }, 
+  { 0, 0, 255, "Loop start", NULL, settings::STORAGE_TYPE_U8 }, 
+  { 255, 0, 255, "Loop end", NULL, settings::STORAGE_TYPE_U8 }, 
   { OC::DIGITAL_INPUT_1, OC::DIGITAL_INPUT_1, OC::DIGITAL_INPUT_4, "Trigger input", OC::Strings::trigger_input_names, settings::STORAGE_TYPE_U4 },
   { BYTEBEAT_CV_MAPPING_NONE, BYTEBEAT_CV_MAPPING_NONE, BYTEBEAT_CV_MAPPING_LAST - 1, "CV1 -> ", bytebeat_cv_mapping_names, settings::STORAGE_TYPE_U4 },
   { BYTEBEAT_CV_MAPPING_NONE, BYTEBEAT_CV_MAPPING_NONE, BYTEBEAT_CV_MAPPING_LAST - 1, "CV2 -> ", bytebeat_cv_mapping_names, settings::STORAGE_TYPE_U4 },
@@ -406,14 +428,14 @@ void BYTEBEATGEN_debug() {
   graphics.print(bytebeatgen.bytebeats_[0].get_s(1));
   
   graphics.setPrintPos(2, 32);
-  graphics.print(bytebeatgen.bytebeats_[0].get_p0());
+  graphics.print(bytebeatgen.bytebeats_[0].get_loop_start());
   graphics.setPrintPos(66, 32);
-  graphics.print(bytebeatgen.bytebeats_[0].get_s(2));
+  graphics.print(bytebeatgen.bytebeats_[0].get_s(5));
 
   graphics.setPrintPos(2, 42);
-  graphics.print(bytebeatgen.bytebeats_[0].get_p1());
+  graphics.print(bytebeatgen.bytebeats_[0].get_loop_end());
   graphics.setPrintPos(66, 42);
-  graphics.print(bytebeatgen.bytebeats_[0].get_s(3));
+  graphics.print(bytebeatgen.bytebeats_[0].get_s(6));
 }
 
 void BYTEBEATGEN_screensaver() {
