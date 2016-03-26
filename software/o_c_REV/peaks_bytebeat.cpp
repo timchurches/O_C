@@ -86,27 +86,35 @@ int16_t ByteBeat::ProcessSingleSample(uint8_t control) {
         case 0:
           // from http://royal-paw.com/2012/01/bytebeats-in-c-and-python-generative-symphonies-from-extremely-small-programs/
           // (atmospheric, hopeful)
-          p0 = p0_ >> 9; // was 9
-          p1 = p1_ >> 9; // was 11
-          p2 = p2_ >> 9;
+          p0 = p0_ >> 8; // was 9
+          p1 = p1_ >> 8; // was 9
+          p2 = p2_ >> 8; // was 9
           // sample = ( ( ((t_*3) & (t_>>10)) | ((t_*p0) & (t_>>10)) | ((t_*10) & ((t_>>8)*p1) & 128) ) & 0xFF) << 8;
           sample = ( ( ((t_*3) & (t_>>10)) | ((t_*p0) & (t_>>10)) | ((t_*10) & ((t_>>8)*p1) & p2) ) & 0xFF) << 8;
           break;
         case 1:
-          p0 = p0_ >> 11;
-          p1 = p1_ >> 11;
-          p2 = p2_ >> 11;
+          p0 = p0_ >> 8; // was 11
+          p1 = p1_ >> 8; // was 11
+          p2 = p2_ >> 8; // was 11
           // equation by stephth via https://www.youtube.com/watch?v=tCRPUv8V22o at 3:38
           // sample = ((((t_*p0) & (t_>>4)) | ((t_*5) & (t_>>7)) | ((t_*p1) & (t_>>10))) & 0xFF) << 8;
           sample = ((((t_*p0) & (t_>>4)) | ((t_*p2) & (t_>>7)) | ((t_*p1) & (t_>>10))) & 0xFF) << 8;
           break;
         case 2: 
-          p0 = p0_ >> 11;
-          p1 = p1_ >> 9;
-          p2 = p2_ >> 12 ;
+          p0 = p0_ >> 8; // was 11
+          p1 = p1_ >> 8;  // was 9
+          p2 = p2_ >> 8 ; // was 12
           // This one is the second one listed at from http://xifeng.weebly.com/bytebeats.html
           sample = ((( (((((t_ >> p0) | t_) | (t_ >> p0)) * p2) & ((5 * t_) | (t_ >> p2)) ) | (t_ ^ (t_ % p1)) ) & 0xFF)) << 8 ;
           break;
+       case 3:
+          p0 = p0_ >> 8;
+          p1 = p1_ >> 8;
+          p2 = p2_ >> 8 ;
+          // Question/answer (equation 9 from Equation Composer Ptah bank)
+          sample = ((t_*(t_>>8|t_>>p2)&p1&t_>>8))^(t_&t_>>p0|t_>>6);
+          break ;
+        /*  
         case 3: 
           p0 = p0_ >> 9;
           p1 = t_ % p1_ ;
@@ -116,6 +124,7 @@ int16_t ByteBeat::ProcessSingleSample(uint8_t control) {
           // sample = ((t_&p0)-(t_%p1))^(t_>>p2);  
           sample = t_*(((t_>>p0)^((t_>>p1)-1)^1)%p2) ; 
           break;
+        */
         case 4: 
           p0 = p0_ >> 9; // was 9
           p1 = p1_ >> 10; // was 11
