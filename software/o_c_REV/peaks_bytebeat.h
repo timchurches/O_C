@@ -60,7 +60,10 @@ class ByteBeat {
       set_loop_end(parameter[7], parameter[8]);
       set_step_mode(stepmode) ;
       set_loop_mode(loopmode) ;
-      bytepitch_ = (65535 - speed_) >> 8 ; 
+      // Quick and dirty log scaling sans LUT
+      uint8_t speed_rshift = (speed_ >> 13) + 1;
+      if (speed_rshift < 2) speed_rshift = 2 ;
+      bytepitch_ = (65535 - speed_) >> speed_rshift ; 
       if (bytepitch_ < 1) {
         bytepitch_ = 1;
       }
