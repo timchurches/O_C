@@ -50,22 +50,28 @@ class ByteBeat {
   void Init();
   int16_t ProcessSingleSample(uint8_t control);
  
-  void Configure(int32_t* parameter, bool stepmode) {
+  void Configure(int32_t* parameter, bool stepmode, bool loopmode) {
       set_equation(parameter[0]);
       set_speed(parameter[1]);
       set_p0(parameter[2]);
       set_p1(parameter[3]);
       set_p2(parameter[4]);
-      set_loop_start(parameter[5]);
-      set_loop_end(parameter[6]);
-      set_stepmode(stepmode) ;
+      set_loop_start(parameter[5], parameter[6]);
+      set_loop_end(parameter[7], parameter[8]);
+      set_step_mode(stepmode) ;
+      set_loop_mode(loopmode) ;
+      bytepitch_ = (65535 - speed_) >> 8 ; 
+      if (bytepitch_ < 1) {
+        bytepitch_ = 1;
+      }
+      equation_index_ = equation_ >> 14 ;
   }
 
    inline void set_equation(int32_t equation) {
     equation_ = equation ;
   }
 
-   inline void set_stepmode(bool stepmode) {
+   inline void set_step_mode(bool stepmode) {
     stepmode_ = stepmode ;
   }
 
@@ -85,20 +91,44 @@ class ByteBeat {
     p2_ = parameter;
   }
 
-  inline void set_loop_start(int32_t parameter) {
-    loop_start_ = parameter << 16 ;
+  inline void set_loop_mode(bool loopmode) {
+    loopmode_ = loopmode ;
   }
 
-  inline void set_loop_end(int32_t parameter) {
-    loop_end_ = parameter << 16 ;
+  inline void set_loop_start(int32_t start, int32_t start_fine) {
+    // loop_start_ = static_cast<uint32_t>(parameter << 16) ;
+    // loop_start_ = 15000;
+    loop_start_ = static_cast<uint32_t>((start << 8) + start_fine) ;
+  }
+
+  inline void set_loop_end(int32_t end, int32_t end_fine) {
+    // loop_end_ = static_cast<uint32_t>(parameter << 16) ;
+    // loop_end_ = 54000;
+    loop_end_ = static_cast<uint32_t>((end << 8) + end_fine) ;
   }
 
   inline bool FillBuffer() const {
     return true;
   }
 
-  inline uint16_t get_parameter(uint8_t param) {
-    return equation_ ;
+  inline uint32_t get_t() {
+    return t_ ;
+  }
+  
+  inline uint32_t get_phase() {
+    return phase_ ;
+  }
+
+  inline uint32_t get_loop_start() {
+    return loop_start_ ;
+  }
+
+  inline uint32_t get_loop_end() {
+    return loop_end_ ;
+  }
+
+  inline uint16_t get_bytepitch() {
+    return bytepitch_ ;
   }
   
  private:
@@ -112,8 +142,10 @@ class ByteBeat {
   uint32_t loop_start_ ;
   uint32_t loop_end_ ;
   bool stepmode_ ;
+  bool loopmode_ ;
 
   uint8_t equation_index_ ;
+  uint16_t bytepitch_ ;
   
   DISALLOW_COPY_AND_ASSIGN(ByteBeat);
 };

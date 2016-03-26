@@ -74,6 +74,7 @@ public:
   void print(int);
   void print(int, size_t width);
   void print(uint16_t, size_t width);
+  void print(uint32_t, size_t width);
   void print(long);
 
   void pretty_print(int);

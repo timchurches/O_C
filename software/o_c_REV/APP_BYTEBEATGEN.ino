@@ -10,14 +10,17 @@
 
 enum ByteBeatSettings {
   BYTEBEAT_SETTING_EQUATION,
-  BYTEBEAT_SETTING_STEPMODE,
   BYTEBEAT_SETTING_SPEED,
   BYTEBEAT_SETTING_P0,
   BYTEBEAT_SETTING_P1,
   BYTEBEAT_SETTING_P2,
+  BYTEBEAT_SETTING_LOOP_MODE,
   BYTEBEAT_SETTING_LOOP_START,
+  BYTEBEAT_SETTING_LOOP_START_FINE,
   BYTEBEAT_SETTING_LOOP_END,
+  BYTEBEAT_SETTING_LOOP_END_FINE,
   BYTEBEAT_SETTING_TRIGGER_INPUT,
+  BYTEBEAT_SETTING_STEP_MODE,
   BYTEBEAT_SETTING_CV1,
   BYTEBEAT_SETTING_CV2,
   BYTEBEAT_SETTING_CV3,
@@ -33,6 +36,10 @@ enum ByteBeatCVMapping {
   BYTEBEAT_CV_MAPPING_P0,
   BYTEBEAT_CV_MAPPING_P1,
   BYTEBEAT_CV_MAPPING_P2,
+  BYTEBEAT_CV_MAPPING_LOOP_START,
+  BYTEBEAT_CV_MAPPING_LOOP_START_FINE,
+  BYTEBEAT_CV_MAPPING_LOOP_END,
+  BYTEBEAT_CV_MAPPING_LOOP_END_FINE,
   BYTEBEAT_CV_MAPPING_LAST,
   BYTEBEAT_CV_MAPPING_FIRST=BYTEBEAT_CV_MAPPING_EQUATION
   
@@ -41,7 +48,7 @@ enum ByteBeatCVMapping {
 class ByteBeat : public settings::SettingsBase<ByteBeat, BYTEBEAT_SETTING_LAST> {
 public:
 
-  static constexpr int kMaxByteBeatParameters = 7;
+  static constexpr int kMaxByteBeatParameters = 9;
 
   void Init(OC::DigitalInput default_trigger);
 
@@ -69,8 +76,8 @@ public:
     return values_[BYTEBEAT_SETTING_EQUATION];
   }
 
-  bool get_stepmode() const {
-    return values_[BYTEBEAT_SETTING_STEPMODE];
+  bool get_step_mode() const {
+    return values_[BYTEBEAT_SETTING_STEP_MODE];
   }
 
   uint8_t get_speed() const {
@@ -89,16 +96,48 @@ public:
     return values_[BYTEBEAT_SETTING_P2];
   }
 
+  bool get_loop_mode() const {
+    return values_[BYTEBEAT_SETTING_LOOP_MODE];
+  }
+
   uint8_t get_loop_start() const {
     return values_[BYTEBEAT_SETTING_LOOP_START];
+  }
+
+  uint8_t get_loop_start_fine() const {
+    return values_[BYTEBEAT_SETTING_LOOP_START_FINE];
   }
 
   uint8_t get_loop_end() const {
     return values_[BYTEBEAT_SETTING_LOOP_END];
   }
 
+  uint8_t get_loop_end_fine() const {
+    return values_[BYTEBEAT_SETTING_LOOP_END_FINE];
+  }
+
   int32_t get_s(uint8_t param) {
     return s_[param] ; 
+  }
+
+  uint32_t get_t() {
+    return static_cast<uint32_t>(bytebeat_.get_t()) ; 
+  }
+
+  uint32_t get_phase() {
+    return static_cast<uint32_t>(bytebeat_.get_phase()) ; 
+  }
+
+  uint32_t get_instance_loop_start() {
+    return static_cast<uint32_t>(bytebeat_.get_loop_start()) ; 
+  }
+
+  uint32_t get_instance_loop_end() {
+    return static_cast<uint32_t>(bytebeat_.get_loop_end()) ; 
+  }
+
+  uint16_t get_bytepitch() {
+    return static_cast<uint16_t>(bytebeat_.get_bytepitch()) ; 
   }
 
   inline void apply_cv_mapping(ByteBeatSettings cv_setting, const int32_t cvs[ADC_CHANNEL_LAST], int32_t segments[kMaxByteBeatParameters]) {
@@ -112,6 +151,11 @@ public:
       case BYTEBEAT_CV_MAPPING_P2:
         bytebeat_cv_rshift = 12 ;
         break;
+      case BYTEBEAT_CV_MAPPING_LOOP_START:
+      case BYTEBEAT_CV_MAPPING_LOOP_START_FINE:
+      case BYTEBEAT_CV_MAPPING_LOOP_END:
+      case BYTEBEAT_CV_MAPPING_LOOP_END_FINE:
+        bytebeat_cv_rshift = 12 ;
       default:
         break;
     }
@@ -128,7 +172,9 @@ public:
     s[3] = SCALE8_16(static_cast<int32_t>(get_p1()));
     s[4] = SCALE8_16(static_cast<int32_t>(get_p2()));
     s[5] = SCALE8_16(static_cast<int32_t>(get_loop_start()));
-    s[6] = SCALE8_16(static_cast<int32_t>(get_loop_end()));
+    s[6] = SCALE8_16(static_cast<int32_t>(get_loop_start_fine()));
+    s[7] = SCALE8_16(static_cast<int32_t>(get_loop_end()));
+    s[8] = SCALE8_16(static_cast<int32_t>(get_loop_end_fine()));
 
     apply_cv_mapping(BYTEBEAT_SETTING_CV1, cvs, s);
     apply_cv_mapping(BYTEBEAT_SETTING_CV2, cvs, s);
@@ -142,6 +188,8 @@ public:
     s[4] = USAT16(s[4]);
     s[5] = USAT16(s[5]);
     s[6] = USAT16(s[6]);
+    s[7] = USAT16(s[7]);
+    s[8] = USAT16(s[8]);
 
     s_[0] = s[0] ;
     s_[1] = s[1] ;
@@ -150,8 +198,10 @@ public:
     s_[4] = s[4] ;
     s_[5] = s[5] ;
     s_[6] = s[6] ;
+    s_[7] = s[7] ;
+    s_[8] = s[8] ;
         
-    bytebeat_.Configure(s, get_stepmode()) ; 
+    bytebeat_.Configure(s, get_step_mode(), get_loop_mode()) ; 
 
     OC::DigitalInput trigger_input = get_trigger_input();
     uint8_t gate_state = 0;
@@ -185,7 +235,7 @@ void ByteBeat::Init(OC::DigitalInput default_trigger) {
 }
 
 const char* const bytebeat_cv_mapping_names[BYTEBEAT_CV_MAPPING_LAST] = {
-  "off", "equ", "spd", "p0", "p1", "p2" 
+  "off", "equ", "spd", "p0", "p1", "p2", "beg+", "beg", "end+", "end"  
 };
 
 const char* const bytebeat_equation_names[] = {
@@ -194,14 +244,17 @@ const char* const bytebeat_equation_names[] = {
 
 SETTINGS_DECLARE(ByteBeat, BYTEBEAT_SETTING_LAST) {
   { 0, 0, 3, "Equation", bytebeat_equation_names, settings::STORAGE_TYPE_U8 },
-  { 0, 0, 1, "Step mode", OC::Strings::no_yes, settings::STORAGE_TYPE_U4 },
   { 255, 0, 255, "Speed", NULL, settings::STORAGE_TYPE_U8 },
   { 128, 0, 255, "Parameter 0", NULL, settings::STORAGE_TYPE_U8 }, 
   { 128, 0, 255, "Parameter 1", NULL, settings::STORAGE_TYPE_U8 }, 
   { 128, 0, 255, "Parameter 2", NULL, settings::STORAGE_TYPE_U8 }, 
-  { 0, 0, 255, "Loop start", NULL, settings::STORAGE_TYPE_U8 }, 
+  { 0, 0, 1, "Loop mode", OC::Strings::no_yes, settings::STORAGE_TYPE_U4 },
+  { 0, 0, 255, "Loop begin ++", NULL, settings::STORAGE_TYPE_U8 }, 
+  { 0, 0, 255, "Loop begin", NULL, settings::STORAGE_TYPE_U8 }, 
+  { 1, 0, 255, "Loop end ++", NULL, settings::STORAGE_TYPE_U8 }, 
   { 255, 0, 255, "Loop end", NULL, settings::STORAGE_TYPE_U8 }, 
   { OC::DIGITAL_INPUT_1, OC::DIGITAL_INPUT_1, OC::DIGITAL_INPUT_4, "Trigger input", OC::Strings::trigger_input_names, settings::STORAGE_TYPE_U4 },
+  { 0, 0, 1, "Step mode", OC::Strings::no_yes, settings::STORAGE_TYPE_U4 },
   { BYTEBEAT_CV_MAPPING_NONE, BYTEBEAT_CV_MAPPING_NONE, BYTEBEAT_CV_MAPPING_LAST - 1, "CV1 -> ", bytebeat_cv_mapping_names, settings::STORAGE_TYPE_U4 },
   { BYTEBEAT_CV_MAPPING_NONE, BYTEBEAT_CV_MAPPING_NONE, BYTEBEAT_CV_MAPPING_LAST - 1, "CV2 -> ", bytebeat_cv_mapping_names, settings::STORAGE_TYPE_U4 },
   { BYTEBEAT_CV_MAPPING_NONE, BYTEBEAT_CV_MAPPING_NONE, BYTEBEAT_CV_MAPPING_LAST - 1, "CV3 -> ", bytebeat_cv_mapping_names, settings::STORAGE_TYPE_U4 },
@@ -418,23 +471,21 @@ bool BYTEBEATGEN_encoders() {
 
 void BYTEBEATGEN_debug() {
   graphics.setPrintPos(2, 12);
-  graphics.print(bytebeatgen.bytebeats_[0].get_equation());
-  graphics.setPrintPos(66, 12);
-  graphics.print(bytebeatgen.bytebeats_[0].get_s(0));
+  graphics.print(bytebeatgen.bytebeats_[0].get_phase(), 12);
+  // graphics.print(bytebeatgen.bytebeats_[0].get_s(0));
 
   graphics.setPrintPos(2, 22);
-  graphics.print(bytebeatgen.bytebeats_[0].get_speed());
-  graphics.setPrintPos(66, 22);
-  graphics.print(bytebeatgen.bytebeats_[0].get_s(1));
+  graphics.print(bytebeatgen.bytebeats_[0].get_t(), 12);
   
   graphics.setPrintPos(2, 32);
-  graphics.print(bytebeatgen.bytebeats_[0].get_loop_start());
-  graphics.setPrintPos(66, 32);
+  // graphics.print(bytebeatgen.bytebeats_[0].get_bytepitch());
+  // graphics.print(bytebeatgen.bytebeats_[0].get_loop_start(), 16);
+  // graphics.setPrintPos(66, 32);
   graphics.print(bytebeatgen.bytebeats_[0].get_s(5));
 
   graphics.setPrintPos(2, 42);
-  graphics.print(bytebeatgen.bytebeats_[0].get_loop_end());
-  graphics.setPrintPos(66, 42);
+  // graphics.print(bytebeatgen.bytebeats_[0].get_speed());
+  // graphics.setPrintPos(66, 42);
   graphics.print(bytebeatgen.bytebeats_[0].get_s(6));
 }
 

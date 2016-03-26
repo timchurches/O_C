@@ -42,7 +42,9 @@ void ByteBeat::Init() {
   equation_ = 0;
   speed_ = 32678;
   loop_start_ = 0 ;
-  phase_ = loop_start_;
+  loop_end_ = 255 << 24 ;
+  phase_ = 0 ;
+  t_ = 0 ;
   p0_ = 32678;
   p1_ = 32678;
   p2_ = 32678;
@@ -55,31 +57,30 @@ int16_t ByteBeat::ProcessSingleSample(uint8_t control) {
   uint32_t p1 = 0;
   uint32_t p2 = 0;
   uint16_t sample = 0;
-  // temporary vars
-  uint32_t p ;
-  uint32_t q ;
-  uint8_t j ;
-  
-  uint16_t bytepitch = (65535 - speed_) >> 7 ; // was 7
-  if (bytepitch < 1) {
-    bytepitch = 1;
-  }
-  equation_index_ = equation_ >> 14 ;
- 
+   
   if (control & CONTROL_GATE_RISING) {
     if (stepmode_) {
       ++t_ ;
     } else {
-      phase_ = loop_start_;
-      t_ =  0 ;
+      phase_ = 0;
+      if (loopmode_) {
+        t_ = loop_start_ ;
+      } else {
+        t_ = 0 ;
+      }
     }
   }
 
   if (!stepmode_) {
-    ++ phase_ ;     
-    if (phase_ < loop_start_ || phase_ > loop_end_) phase_ = loop_start_ ;
-    if (phase_ % bytepitch == 0) ++t_; 
+    ++phase_ ; 
+  }    
+  
+  if (loopmode_ && (t_ < loop_start_ || t_ > loop_end_)) {
+     t_ = loop_start_ ;
+     phase_ = 0 ;
   }
+
+  if (!stepmode_ && (phase_ % bytepitch_ == 0)) ++t_; 
 
     switch (equation_index_) {
         case 0:
@@ -112,8 +113,8 @@ int16_t ByteBeat::ProcessSingleSample(uint8_t control) {
           p2 = p2_ >> 13 ;
           // Warping overtone echo drone, from BitWiz
           // sample = ((t_&p0)-(t_%p1))^(t_>>7);  
-          sample = ((t_&p0)-(t_%p1))^(t_>>p2);  
-          // sample = t_*(((t_>>p1)^((t_>>p1)-1)^1)%p0) ; 
+          // sample = ((t_&p0)-(t_%p1))^(t_>>p2);  
+          sample = t_*(((t_>>p0)^((t_>>p1)-1)^1)%p2) ; 
           break;
         case 4: 
           p0 = p0_ >> 9; // was 9
