@@ -21,8 +21,8 @@ enum EnvelopeSettings {
   ENV_SETTING_SEG3_VALUE,
   ENV_SETTING_SEG4_VALUE,
   ENV_SETTING_TRIGGER_INPUT,
-  ENV_SETTING_TRIGGER_DELAY_MILLISECONDS,
-  ENV_SETTING_TRIGGER_DELAY_SECONDS,
+  ENV_SETTING_TRIGGER_DELAY_FINE,
+  ENV_SETTING_TRIGGER_DELAY_COARSE,
   ENV_SETTING_TRIGGER_DELAY_IGNORE_NEW_TRIGGERS,
   ENV_SETTING_CV1,
   ENV_SETTING_CV2,
@@ -73,8 +73,8 @@ public:
     return static_cast<OC::DigitalInput>(values_[ENV_SETTING_TRIGGER_INPUT]);
   }
 
-  uint16_t get_trigger_delay() const {
-    return (1000 * values_[ENV_SETTING_TRIGGER_DELAY_SECONDS]) + values_[ENV_SETTING_TRIGGER_DELAY_MILLISECONDS] ;
+  uint32_t get_trigger_delay() const {
+    return (16667 * values_[ENV_SETTING_TRIGGER_DELAY_COARSE]) + (17 * values_[ENV_SETTING_TRIGGER_DELAY_FINE]) ;
   }
 
   bool get_trigger_delay_ignore_new_triggers() const {
@@ -205,13 +205,14 @@ public:
     uint8_t gate_state = 0;
 
     bool triggered = triggered_;
+    ++sinceTrigger_; // note: roll-over is not handled - the delay may misbehave, once every 71 hours.
     if (triggers & DIGITAL_INPUT_MASK(trigger_input)) {
       if (!get_trigger_delay_ignore_new_triggers() || (!triggered && get_trigger_delay_ignore_new_triggers())) {
         sinceTrigger_ = 0;
       }
       triggered=true;
     }
-    uint16_t trigger_delay = get_trigger_delay();
+    uint32_t trigger_delay = get_trigger_delay();
     if ((!trigger_delay && triggered) || (triggered && (sinceTrigger_ >= trigger_delay))) {
       gate_state |= peaks::CONTROL_GATE_RISING;
       triggered = false;
@@ -239,7 +240,7 @@ private:
   EnvelopeType last_type_;
   bool gate_raised_;
 
-  elapsedMillis sinceTrigger_;
+  uint32_t sinceTrigger_;
   bool triggered_;
 
 };
@@ -250,6 +251,8 @@ void EnvelopeGenerator::Init(OC::DigitalInput default_trigger) {
   env_.Init();
   last_type_ = ENV_TYPE_LAST;
   gate_raised_ = false;
+  sinceTrigger_ = 0;
+  triggered_ = false;
 }
 
 const char* const envelope_types[ENV_TYPE_LAST] = {
