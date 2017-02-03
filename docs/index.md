@@ -1,5 +1,8 @@
 # Ornaments & Crimes v1.2
 
+* TOC
+{:toc}
+
 ##Extended Firmware for the Ornament & Crime DIY eurorack module
 
 This documentation is for v1.2 firmware. Documentation for earlier versions can be found [here](https://github.com/mxmxmx/O_C/wiki/Ornaments-and-Crimes-extended-firmware).
