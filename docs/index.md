@@ -74,7 +74,9 @@ Each app has two display pages, a settings mode and a "screensaver" mode. The ap
 
 ***
 
-## CopierMaschine :dolphin:
+# The Apps
+
+## CopierMaschine 
 
 Works much the same as the original o_C / quantising **ASR** firmware. Except, the mode now incorporates some of the new/improved quantiser features, including a larger selection of **(editable) preset scales** as well as advanced user-scale-edit options (for details, see the [Quantermain](#quantermain) "app" below). 
 
