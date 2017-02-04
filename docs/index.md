@@ -106,6 +106,7 @@ If the index parameter was set to, say, `i = 8`, the ASR will now output the val
 Please see the discussion of the `Trigger delay` menu selection in the _Quantermain_ app documentation below - the same considerations apply to the `Trigger delay` setting in _CopierMaschine_.
 
 ### Inputs and outputs
+
 |I/O|Function|
 |---|---|
 |TR1|Clock input|
@@ -119,6 +120,7 @@ Please see the discussion of the `Trigger delay` menu selection in the _Quanterm
 |A, B, C, D| ASR outputs 1-4|
 
 ### Controls
+
 |Control|Function|
 |---|---|
 |Left encoder (turn)| Select scale in main menu; move cursor in scale edit menu|
@@ -130,6 +132,7 @@ Please see the discussion of the `Trigger delay` menu selection in the _Quanterm
 |Down button|Transpose down: one octave|
 
 ### Available settings (per-channel)
+
 |Setting | Meaning |
 |---|---|
 |`scale`|Current scale|
