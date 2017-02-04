@@ -283,10 +283,12 @@ Tip: for a pretty display, patch the output of an LFO into CV1 in order to rapid
 |`Output mode`|Output mode, with the default being `chord`, or use `tune` to output the quantised root on all four output channels|
 |`Trigger type`|Sets the trigger behaviour, either P. L and R transforms triggered by trigger inputs on TR2, TR3 and TR4 respectively, or N, S or H transforms, also triggered bt TR2, TR3 or TR4 respectively, or `Eucl`, which enable Euclidean trigger masks - see below for details.|
 
+
 ### Controls
 
-|Control|Function|
-|---|---|
+
+| Control | Function |
+|---------|----------|
 |Left encoder (turn)| Root note transpose up or down|
 |Left encoder (press)| Toggle display of note numbers (semitone offsets from the root note) or names (note: the names are the simplest possible mapping, thus there are no enharmonic substitutions)|
 |Left encoder (long press)|Reset to defaults|
@@ -296,10 +298,12 @@ Tip: for a pretty display, patch the output of an LFO into CV1 in order to rapid
 |Up button|Increment chord inversion by 1|
 |Down button|Decrement chord inversion by 1|
 
+
 ### Inputs and outputs
 
-|I/O|Function|
-|---|---|
+
+| I/O | Function |
+|-----|----------|
 |TR1|Reset to root triad|
 |TR2|P transform (if `Trigger type` is `PLR`), or N transform (if `Trigger type` is `NSH`), or clock input (if `Trigger type` is `Eucl`)|
 |TR3|L transform (if `Trigger type` is `PLR`), or S transform (if `Trigger type` is `NSH`), or clock input (if `Trigger type` is `Eucl`)|
