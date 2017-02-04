@@ -17,7 +17,7 @@ This documentation is for v1.2 firmware. Documentation for earlier versions can 
 
 - The O+C module, and the Ornaments & Crimes firmware for it, break new ground as a **polymorphic module**: a generic set of inputs and outputs are provided, and the textual OLED display is used to permit re-mapping of these inputs and outputs for each app, and in some cases, for each of the four channels within each app. The O+C module does not purport to be the paradigmatic pinnacle of polymorphism — in fact, it was originally designed to fulfil just one purpose (= ASR) — but together with the Ornaments & Crimes firmware suite for it, we hope it provides an interesting and useful early step in the evolution of such multi-purpose modules. 
 
-#####The apps currently available in Ornaments & Crimes are:
+The apps currently available in Ornaments & Crimes are:
 
 - [_CopierMaschine_](#copiermaschine) is an enhanced version of the original quantising digital emulation of a four stage **analogue shift register** (ASR).
 - [_Harrington 1200_](#harrington-1200) provides basic neo-Riemannian **Tonnetz transformations** of triadic chords, triggered by the digital (gate/trigger) inputs.
