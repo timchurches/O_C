@@ -904,7 +904,6 @@ _Piqued_ presents quite a rich UI (user interface), which is harder to describe 
 
 | Setting                  | Meaning                                                                        |
 |--------------------------|--------------------------------------------------------------------------------|
-
 |`Eucl length`| sets the length of the Euclidean pattern (range 2 to 32 in "beats", where each beat is a received trigger/gate pulse) used to filter triggers for that channel. For a detailed explanation of Euclidean patterns and their use in rhythm generation, see [this paper](http://cgm.cs.mcgill.ca/~godfried/publications/banff.pdf) by Godfried Toussaint, or for a brief explanation, see [this presentation}(http://www.maths.usyd.edu.au/u/joachimw/talk2.pdf).  `Eucl length` defaults to `Off`, which means there is no filtering of triggers.| 
 |`Eucl fill`| sets the number of beats in the pattern that let triggers through to "fire" the envelope. If the fill number is equal to or greater than the Euclidean pattern length number, then every incoming trigger will pass the Euclidean filter and fire the envelope for that channel. If the fill number is zero, then none shall pass.|
 |`Eucl offset`| sets the offset (or more accurately, the rotation) of the Euclidean pattern. The combination of pattern length (`Eucl length`) and number of active beats (`Eucl fill`) within that pattern length uniquely determines the Euclidean pattern, using the Bjorklund algorithm. For example, if `Eucl length` is set to 8 and `Eucl fill` is set to 5, and `Eucla offset` is set to the default of 0, then the pattern will be 10110110, where 1 is an active beat (triggers are allowed to pass) and 0 is inactive (triggers are blocked). By setting `Eucl offset` to 1, the pattern becomes 01101101, if set to 2 the pattern becomes 11011010 and so on.| 
@@ -923,6 +922,7 @@ _Piqued_ presents quite a rich UI (user interface), which is harder to describe 
 |`Release mult`| sets the duration multiplier for the release segment. Range is 1 to 8192.|
 |`Amplitude`| sets the overall amplitude for the envelope, from 0 (no amplitude) to 127 (full range). Defaults to 127.  Use it in conjunction with voltage control overall envelope amplitude to dynamically vary the envelope amplitude (that is, the maximum envelope level). See also the related `Sampled Ampl` setting, immediately below.|
 |`Sampled Ampl`| toggles whether the overall amplitude value for the envelope is set continuously, or whether the overall amplitude value is sampled when a new trigger/gate is received and then remains at that sampled value until a new trigger/gate is received. It defaults to `off`.|
+
 
 
 |Envelope type | Description |
