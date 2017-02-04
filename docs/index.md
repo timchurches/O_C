@@ -1,11 +1,12 @@
 # Ornament & Crime firmware v1.2
 
-Extended Firmware for the Ornament & Crime DIY eurorack module
+Extended Firmware for the Ornament & Crime DIY eurorack module.
 
-This documentation is for v1.2 firmware. Documentation for earlier versions can be found [here](https://github.com/mxmxmx/O_C/wiki/Ornaments-and-Crimes-extended-firmware). :dancers:
+This documentation is for v1.2 firmware. Documentation for earlier versions can be found [here](https://github.com/mxmxmx/O_C/wiki/Ornaments-and-Crimes-extended-firmware). 
 
 ## Table of Contents 
 
+* TOC
 {:toc}
 
 ---
@@ -36,18 +37,6 @@ The apps currently available in Ornaments & Crimes are:
 For information about the O+C module **hardware**, including DIY build details, please start [here](https://github.com/mxmxmx/O_C/wiki/hardware-basics).
 
 ***
-
-### FIRMWARE CHANGELOG
-
-#### [Changes between v1.1 and v1.2](https://github.com/mxmxmx/O_C/wiki/firmware-change-log#changes-between-v11-and-v12)
-
-#### [Changes between v1.0 and v1.1](https://github.com/mxmxmx/O_C/wiki/firmware-change-log#changes-between-v10-and-v11)
-
-### Appendices
- - [VIDEOS](https://github.com/mxmxmx/O_C/wiki/Ornament-and-Crime-videos-and-tracks)
- - [credits, thanks, acknowledgements, and sources of inspiration](#credits-thanks-acknowledgements-and-sources-of-inspiration)
- - [licensing of PCB design files and of firmware and its source code](https://github.com/mxmxmx/O_C/wiki/Licensing-of-Ornament(s)---and-Crime(s))
- - [known issues and things to be checked and improved](#known-issues-and-things-to-be-checked-or-improved)
 
 ## Startup
 
@@ -85,7 +74,7 @@ Each app has two display pages, a settings mode and a "screensaver" mode. The ap
 
 ***
 
-## CopierMaschine
+## CopierMaschine :dolphin:
 
 Works much the same as the original o_C / quantising **ASR** firmware. Except, the mode now incorporates some of the new/improved quantiser features, including a larger selection of **(editable) preset scales** as well as advanced user-scale-edit options (for details, see the [Quantermain](#quantermain) "app" below). 
 
@@ -1279,6 +1268,17 @@ The screen is divided into four channel lanes (columns), with the same layout as
    - quad channel frequency meter, using the CV inputs.
 
 ***
+
+# Firmware CHANGELOG
+
+ - [Changes between v1.1 and v1.2](https://github.com/mxmxmx/O_C/wiki/firmware-change-log#changes-between-v11-and-v12)
+ - [Changes between v1.0 and v1.1](https://github.com/mxmxmx/O_C/wiki/firmware-change-log#changes-between-v10-and-v11)
+
+# Appendices
+ - [VIDEOS](https://github.com/mxmxmx/O_C/wiki/Ornament-and-Crime-videos-and-tracks)
+ - [credits, thanks, acknowledgements, and sources of inspiration](#credits-thanks-acknowledgements-and-sources-of-inspiration)
+ - [licensing of PCB design files and of firmware and its source code](https://github.com/mxmxmx/O_C/wiki/Licensing-of-Ornament(s)---and-Crime(s))
+ - [known issues and things to be checked and improved](#known-issues-and-things-to-be-checked-or-improved)
 
 # Credits, thanks, acknowledgements, and sources of inspiration
 
