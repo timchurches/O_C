@@ -888,10 +888,12 @@ _Piqued_ presents quite a rich UI (user interface), which is harder to describe 
 |Up button|Increase duration for currently selected envelope segment for currently displayed envelope generator (A to D) by 32 (when in envelope visualisation mode only)|
 |Down button|Decrease duration for currently selected envelope segment for currently displayed envelope generator (A to D) by 32 (when in envelope visualisation mode only)|
 
+
 ### Available settings (per-channel)
 
-|Setting | Meaning |
-|---|---|
+
+| Setting | Meaning |
+|---------|---------|
 |(envelope type)| the type of envelope (segment nomenclature is standard: A=attack, D=decay, S=sustain (level) and R=release). Available envelope types are described in the table below.|
 |`Trigger input`| specifies which trigger/gate input, TR1 to TR4, is used to trigger or gate the envelope on the channel currently displayed. |
 |`Tr delay mode`| sets the mode for the trigger delay. If enabled, the trigger delay will postpone the "firing" of the envelope (that is, the commencement of the attack segment of the envelope) for the time set by `Tr delay msecs` and `Tr delay secs` (see below). Available trigger delay modes  are `Off`, `Queue` and `Ring`. `Queue` means that subsequent triggers received while a delay period is active are added to a queue for later action, up to a maximum queue depth set by the `Tr delay count` setting (maximum 32). Further triggers during the delay period are ignored until the number of queued triggers falls below the value set by `Tr delay count`. `Ring` is similar except that triggers received after the queue is full will replace the final trigger in the queue.|
@@ -917,6 +919,7 @@ _Piqued_ presents quite a rich UI (user interface), which is harder to describe 
 |`Amplitude`| sets the overall amplitude for the envelope, from 0 (no amplitude) to 127 (full range). Defaults to 127.  Use it in conjunction with voltage control overall envelope amplitude to dynamically vary the envelope amplitude (that is, the maximum envelope level). See also the related `Sampled Ampl` setting, immediately below.|
 |`Sampled Ampl`| toggles whether the overall amplitude value for the envelope is set continuously, or whether the overall amplitude value is sampled when a new trigger/gate is received and then remains at that sampled value until a new trigger/gate is received. It defaults to `off`.|
 
+
 |Envelope type | Description |
 |--------------|-------------|
 | `AD`         | Attack-Decay: the attack segment commences on receipt of a trigger or on the rising edge of a gate signal, and the decay segment follows immediately after the attack segment has reached its peak, regardless of whether the gate or trigger signal is still high. |
@@ -928,6 +931,7 @@ _Piqued_ presents quite a rich UI (user interface), which is harder to describe 
 | `AD loop` | is like the AD envelope, except that it automatically re-triggers for as long as the trigger/gate input for it is high (see also the `Gate high` setting) |
 | `ADR loop` |  is like the ADR envelope, except that it automatically re-triggers for as long as the trigger/gate input for it is high (see also the `Gate high` setting) |
 | `ADAR loop` |  is like the ADAR envelope, except that it automatically re-triggers for as long as the trigger/gate input for it is high (see also the `Gate high` setting) |
+
 
 | Segment shape  | Description |
 |----------------|-------------|
@@ -942,6 +946,7 @@ _Piqued_ presents quite a rich UI (user interface), which is harder to describe 
 | `MeDip` | Medium dipper - has a medium sized dip on the way up or down. |
 | `LtDip` | Little dipper - has a little dip (more a ledge) on the way up or down. |
 | `Wiggl` | Wiggles - lots of wiggles on the way up or down. |
+
 
 ### Inputs and outputs
 
