@@ -284,6 +284,7 @@ Tip: for a pretty display, patch the output of an LFO into CV1 in order to rapid
 |`Trigger type`|Sets the trigger behaviour, either P. L and R transforms triggered by trigger inputs on TR2, TR3 and TR4 respectively, or N, S or H transforms, also triggered bt TR2, TR3 or TR4 respectively, or `Eucl`, which enable Euclidean trigger masks - see below for details.|
 
 ### Controls
+
 |Control|Function|
 |---|---|
 |Left encoder (turn)| Root note transpose up or down|
@@ -296,6 +297,7 @@ Tip: for a pretty display, patch the output of an LFO into CV1 in order to rapid
 |Down button|Decrement chord inversion by 1|
 
 ### Inputs and outputs
+
 |I/O|Function|
 |---|---|
 |TR1|Reset to root triad|
@@ -353,6 +355,7 @@ Each cell of the grid can contain a neo-Riemannian transformation, or a reset, a
 The implementation computes these in a single transform step however, not sequentially.
 
 ### Controls
+
 |Control|Function|
 |---|---|
 |Left encoder (turn)| Select cell in the grid - the 25 cells are accessed sequentially, row-wise.|
@@ -450,6 +453,7 @@ The output accuracy should be excellent (is fairly excellent) due to the use of 
 |D| Output voltage for channel D (quantised if quantisation is enabled) |
 
 ### Controls
+
 |Control|Function|
 |---|---|
 |Left encoder (turn)| Select channel, or note in scale in scale edit mode|
@@ -463,6 +467,7 @@ The output accuracy should be excellent (is fairly excellent) due to the use of 
 |Down button down | reset scale mask |
 
 ### Available settings (per-channel)
+
 |Setting | Meaning |
 |---|---|
 |`scale`|Current scale|
@@ -583,6 +588,7 @@ You can disable quantisation on each channel by setting the scale to `Off`. When
 Disabling quantisation when using a Turing Machine, Logistic map, byte beats or integer sequence internal source allows the output for that channel to act as a semi-random modulation source.
 
 ### Possible future enhancements 
+
  - portamento! Possibly with settable speeds in either direction, and a choice of curves and easing (spring physics portamento, perhaps?)
  - ~~adjustable sampling delay, as in Braids~~ (done!)
  - user-adjustable hysteresis parameters to fine-tune latency vs jitter for various scenarios and use-cases
@@ -615,6 +621,7 @@ Disabling quantisation when using a Turing Machine, Logistic map, byte beats or 
 - when `trigger source` = `TR1` - `TR4`, the aux. outputs (C, D) simply pass through the main trigger signal (see `--> pw` settings); when set to `continuous`, the aux. output goes high if/when the note **changes** (= trigger-on-note-change). the aux. outputs can alternatively output a transposed copy of the main channel CV (`aux.output` = `copy`), or output said CV, delayed by one clock (`aux.output` = `asr`).     
 
 ### Inputs and outputs
+
 |I/O|Function| - |
 |---|---|---|
 |TR1|clock input #1| - |
@@ -629,6 +636,7 @@ Disabling quantisation when using a Turing Machine, Logistic map, byte beats or 
 |C, D| aux outputs #1, #2 (default to gate output)| - |
 
 ### Available settings (per-channel)
+
 |Setting | Meaning |
 |---|---|
 |`scale`| current scale |  
@@ -658,6 +666,7 @@ Disabling quantisation when using a Turing Machine, Logistic map, byte beats or 
 ### Controls:
 
 #### main menu
+
 |Control|Function|
 |---|---|
 |Left encoder (turn)| select channel |
@@ -790,6 +799,7 @@ Note that the output voltage range of the O+C module is asymmetrical (about -3V 
 |A, B, C, D | Mappable outputs from the two generators (see table below) |
 
 ### Controls 
+
 |Control|Function|
 |---|---|
 |Left encoder (turn)| Increase or decrease frequency of currently selected generator (1 or 2)|
@@ -938,6 +948,7 @@ Trigger input and CV1 to CV4 are mappable per-channel via the menu, as described
 The screen is divided into quadrants, each showing a rolling display of the output values on each of channels A to D. Superimposed on this rolling value line is a representation of the envelope for that channel, as it progresses through its segments.
 
 ### Tips and tricks
+
  - the ADR mode can also be used as an AHR (attack-hold-release, sometimes also called AHD (attack-hold-decay)) envelope generator. AHR envelope are useful when you want to generate an envelope with a flat sustain period, which usually requires a gate input with some duration. If you only have trigger signals, that is, short pulses, then you can create an AHR envelope by choosing ADR mode, and setting the sustain inflection point to 255 (maximum). By doing that, the decay segment falls from maximum value to... maximum value - in other words, it's flat! The decay segment time/duration then sets the hold duration after a trigger is received. Also try setting the sustain level in ADR mode to something a little bit less than 255 (say 230), and set the decay shape to Wiggle. Now you have an AHR envelope with a wiggly and slightly downsloping plateau segment. Several variations on this theme are possible.
 
 ### Possible future enhancements 
@@ -1001,6 +1012,7 @@ _Sequins_ is a basic, **dual-channel sequencer**. The app provides four 16-step 
 - note: any CV input can be used in CV-address mode (`S+H#1` = CV1, `S+H#2` = CV2, etc). the `CV adr. range` setting adjusts the resolution of the inputs, relative to the length of the sequence (ie, you'll either need `5V` or `10V` to move through the entire span of the sequence).
 
 ### Inputs and outputs
+
 |I/O|Function| - |
 |---|---|---|
 |TR1|clock input #1| - |
@@ -1015,6 +1027,7 @@ _Sequins_ is a basic, **dual-channel sequencer**. The app provides four 16-step 
 |C, D| aux outputs #1, #2 (default to gate output)| - |
 
 ### Available settings (per-channel)
+
 |Setting | Meaning |
 |---|---|
 |`scale`| current scale |  
@@ -1034,6 +1047,7 @@ _Sequins_ is a basic, **dual-channel sequencer**. The app provides four 16-step 
 ### Controls:
 
 #### main menu
+
 |Control|Function|
 |---|---|
 |Left encoder (turn)| select channel |
@@ -1048,6 +1062,7 @@ _Sequins_ is a basic, **dual-channel sequencer**. The app provides four 16-step 
 |Down button (long press) | CV menu |
 
 ### CV menu
+
 - **enter** the CV menu by holding down the `down` button for > 2 seconds. 
 - use the `right` encoder to assign CV input channels 1-4 to a channel parameter (currently available parameters are: `transposition` (in octaves), `scale mask`, `sequence number` (1-4), `pulsewidth`, and `multiplier/divisor`.
 - **return** to the main menu by either pressing the `up` or `down` buttons, or by moving the cursor to an empty field and then pressing the `right` encoder button.
@@ -1067,6 +1082,7 @@ _Sequins_ is a basic, **dual-channel sequencer**. The app provides four 16-step 
 |Down button (long press) | clear CV mappings |
 
 #### sequence editor
+
 |Control|Function|
 |---|---|
 |Left encoder (turn)| select step |
@@ -1094,6 +1110,7 @@ _Sequins_ is a basic, **dual-channel sequencer**. The app provides four 16-step 
 _Dialectic Ping Pong_ is a port of the bouncing ball envelope generators from the Mutable Instruments Peaks module source code (these are not exposed in the official Peaks firmware, but are available on Peaks with the [Dead Man's Catch](https://github.com/timchurches/Mutated-Mutables/releases) alternative firmware installed). These generators implement a simple but effective simulation of the physics of a ball that is thrown into the air with a certain velocity, from a certain height, and which then returns to Earth (or a planet of your choice) under the influence of (configurable) gravity, and then bounces (with a settable "bounce loss" simulating how hard the ball is pumped up, if it is a basketball), before being pulled back to Earth and bouncing again, and so on.
 
 ### Controls
+
 |Control|Function|
 |---|---|
 |Left encoder (turn)| Select channel A to D to edit (all channels always active)|
@@ -1212,6 +1229,7 @@ _References_ is a simple utility app which outputs fixed reference voltages. The
 Note that unlike all the other apps, the settings for _references_ are *not* saved and will revert tot he defaults eat time the module is powered on. This is to save EEPROM storage space - saved settings were not regarded as critical for this app.
 
 ### Controls
+
 |Control|Function|
 |---|---|
 |Left encoder (turn)| Select channel A to D to edit (all channels always active)|
@@ -1239,6 +1257,7 @@ No inputs are used. Reference voltages for channels A to D appear on outputs A t
 The screen is divided into four channel lanes (columns), with the same layout as the _Quantermain_ screensaver, except that the output voltage (rounded to the nearest millivolt) is shown as the top of each lane (column). Note that the minus signs for negative voltages are quite small due to the limited display space, and can be quite hard to see.
 
 ### Possible future enhancements 
+
  - lots of things! The current _References_ app is really just a placeholder. Some possibilities:
    - simple approximate quad channel voltmeter which measures and displays voltage on each of the CV inputs (to nearest 0.01V (nearest 10 mV).
    - quad channel BPM (beats per minute) meter using the trigger inputs
@@ -1261,6 +1280,7 @@ We welcome contributions from others (ideally via _pull_ requests on GitHub) to 
   - build and calibration instructions and procedures
 
 ### Firmware
+
 - Max Stadler: 
   - overall firmware framework and hardware interfacing abstractions
   - original menu system design (still used) and calibration procedures
@@ -1301,12 +1321,14 @@ We welcome contributions from others (ideally via _pull_ requests on GitHub) to 
   - lots of testing, debugging, and tweaking of code
 
 ## Thanks
+
  - Enormous thanks to Olivier Gillet of Mutable Instruments for all of the wonderful [open-source module code](https://github.com/pichenettes/eurorack) which we have ported to and re-used in O+C 
  - Paul Stoffregen for creating the open-source [Teensy platform](https://www.pjrc.com/teensy/teensy31.html) and associated firmware libraries used by the O+C module
  - Bret Truchan for permission to use byte beats equations which he collected, devised  and curated for the excellent Microbe Modular [Equation Composer](http://microbemodular.com/products/equation-composer/overview) module, which is highly recommended for anyone interested in byte beats
  - Stephen from Noise Engineering for helpful notes and info about the neo-Riemannian transformation implementation in his [Tonnetz Sequent](http://www.noiseengineering.us/tonnetz-sequent/) module, which is highly recommended for anyone interested in tonnetz harmonies.
  
 ## Acknowledgements and sources of inspiration
+
  - the Noise Engineering [Tonnetz Sequent](http://www.noiseengineering.us/tonnetz-sequent/) module for introducing us to [neo-Riemannian transformations](https://en.wikipedia.org/wiki/Neo-Riemannian_theory) and harmonic tonnetz music theory
  - Frank Daniels (aka fcd72) for many of the [ideas behind the vector sequencer](https://dmachinery.wordpress.com/2013/01/05/the-vector-sequencer/) used in the _Automatonnetz_ app
  - the [KlangbauKöln RND – Logistische Gleichung](http://www.klangbauköln.de/klangbau-in-koeln/rnd-modul-logistische-gleichung/) module and the alternative (expert) firmware for the [XAOC Batumi](http://xaocdevices.com/main/batumi/) module for introducing us to the use of [May-Verhulst logistic maps](https://en.wikipedia.org/wiki/Logistic_map) as a semi-random value source.
@@ -1319,6 +1341,7 @@ We welcome contributions from others (ideally via _pull_ requests on GitHub) to 
 ***
 
 # Known Issues and Things to be checked or improved
+
 - the 16.6 kHz DAC update rate means that audible digital aliasing is present when the output is used as an audio source - which is why the only app intended as an audio source is _Viznutcracker, sweet!_, which, as a byte beat generator, **depends** on lots of horrible digital aliasing and related digital artefacts to create its distinct sound. That said, several of the other apps can produce signals in the audio range, but you may need to use them with a low-pass filter to remove some of the aliasing noise (if you wish - some people like the inharmonic "sizzle" of digital aliasing). Anyway, just be aware that O+C is intended to be used as a pitch CV generator, and as a slow modulation CV source, not as audio oscillator or audio signal generator. In theory, some of the digital aliasing may "bleed through" into the audio domain even when the O+C is used as a modulation CV source (eg as an envelope generator or LFO modulating a VCF cut-off or VCA gain). We have not found that to be a problem in practice, but if it does become apparent, then you can always interpose a low-pass filter between the O+C and whatever is being modulated. WMD make a module exactly for this purpose: the [Quad Anti-aliasing Filter (QAAF)](https://www.wmdevices.com/collections/eurorack-modules/products/quad-anti-aliasing-filter-qaaf). However, this is unlikely to be required. Note that for its original designed purpose, as a module that deals with or generates pitch CVs, the 16.6 KHz DAC update rate is not a problem.
 - add a brief on-screen confirmatory message when settings are saved. Currently, there is no feedback that the save has been successful.
 - when used as an LFO (that is, the _Quadraturia_ app), the waveform is not symmetrically bipolar, because the output range of the module is -3V to +6V. This can be corrected by adding -1.5V to each output, so that the output range is shifted from -3V to 6V, to -4.5V to +4.5V. The [Mutable Instruments Shades](http://mutable-instruments.net/modules/shades) module is excellent for doing such level shifting (and voltage scaling), but there are many other utility modules which can do the same. The Lorenz and Rössler functions output by the _Low-rents_ app are similarly asymmetrical - they also range from -3V to + +6V, due to the hardware design of O+C.
