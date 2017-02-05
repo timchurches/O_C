@@ -55,7 +55,6 @@
 
          <!-- MAIN CONTENT -->
           <div id="main_content_wrap" class="outer">
-            <section id="main_content" class="inner">
               <div class="container">
                 <div class="row">
                   <!-- sidebar, which will move to the top on a small screen -->
@@ -64,11 +63,12 @@
                   </div>
                   <!-- main content area -->
                   <div class="col-sm-9">               
-                    {{ content }}
+                    <section id="main_content" class="inner">
+                      {{ content }}
+                    </section>
                   </div>
                  </div>
                </div>
-            </section>
           </div>
    
     <!-- FOOTER  -->
