@@ -53,24 +53,23 @@
       </header>
     </div>
 
-  <div class="container">
-    <div class="row">
-      <!-- sidebar, which will move to the top on a small screen -->
-      <div class="col-sm-3">
-        <nav id="toc" data-spy="affix" data-toggle="toc"></nav>
-      </div>
-        <!-- main content area -->
-        <div class="col-sm-9">
-          <!-- MAIN CONTENT -->
+         <!-- MAIN CONTENT -->
           <div id="main_content_wrap" class="outer">
             <section id="main_content" class="inner">
-              {{ content }}
+              <div class="container">
+                <div class="row">
+                  <!-- sidebar, which will move to the top on a small screen -->
+                  <div class="col-sm-3">
+                    <nav id="toc" data-spy="affix" data-toggle="toc"></nav>
+                  </div>
+                  <!-- main content area -->
+                  <div class="col-sm-9">               
+                    {{ content }}
+                  </div>
+                 </div>
+               </div>
             </section>
           </div>
-        </div>
-    </div>
-  </div>
-    
    
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
