@@ -4,13 +4,15 @@
 
 #### bill of materials (BOM)
 
-- see [here](https://github.com/mxmxmx/O_C/wiki/bom_2d) (2d, 2e) (red pcbs)
-- see [here](https://github.com/mxmxmx/O_C/wiki/bom_2c) (2c) (yellow pcbs)
+- see [here](/O_C/bom_2d/) (2d, 2e) (red pcbs)
+- see [here](/O_C/bom_2c/) (2c) (yellow pcbs)
 
 #### shopping:
+
 - for your convenience, here's a mouser [cart](https://eu.mouser.com/ProjectManager/ProjectDetail.aspx?AccessID=d2683e5a97) (2d, 2e). note: this has 20mm **D-shaft** encoders, **black** button caps (when using black panels, a different colour might be more [friendly to the eyes](https://c1.staticflickr.com/9/8016/29538793842_6a1f8160bd_c.jpg) (e.g. 642-1IS11-15.0, or 642-1IS11-16.0)), and **includes** the teensy 3.2 (which can be had cheaper at [oshpark](http://store.oshpark.com/products/teensy-3-1)); it **doesn't include** the 2x14 [header](http://www.ebay.com/itm/Single-Row-40Pin-2-54mm-Round-Male-Pin-Header-gold-plated-machined-J8-/301747757572)/[sockets](http://www.ebay.com/itm/3Pcs-Single-Row-40Pin-2-54mm-Round-Female-Pin-Header-gold-plated-machined-H-/301723646399), [thonkiconn](https://www.thonk.co.uk/shop/3-5mm-jacks/) jacks, 3M/hex screws, and the OLED display. re knobs: options include [sifam](https://www.thonk.co.uk/shop/intellijel-style-knobs/) (w/ "encoder caps"), [rogan 2s](https://www.thonk.co.uk/shop/make-noise-mutable-style-knobs/), and [cliff K85](https://www.google.com/search?q=CL17094) (+ suitable [cap](https://www.google.com/search?q=CL1709761)).
 
 #### panels:
+
 - current options include: DIY ([.fpd, .svg](https://github.com/mxmxmx/O_C/tree/master/hardware)), [common ground/KOMA](http://www.commonground.community/), [grayscale](http://grayscale.info/panels/mxmxmx-ornament-crime/), [magpie](http://magpie-modular.myshopify.com/products/ornament-crime-panels-pcbs), and [oscillosaurus](http://modularaddict.com/oscillosaurus-oc-panel).
 
 #### schematic:
@@ -19,7 +21,7 @@
 
 #### board revision change log: 
 
-- see [here](https://github.com/mxmxmx/O_C/wiki/change-log) (check in case of doubt)
+- see [here](/O_C/hardware-changelog/) (check in case of doubt)
 
 #### component overlay:
 
