@@ -1,4 +1,4 @@
-#/* BOM for O+C (rev 2d, 2e) */
+# BOM for O+C (rev 2d, 2e)
 
 - if your board is is labelled 2e (on top of the board, underneath the 'ornament and crime' label), that's rev 2e. previous versions differ only slightly.
 
@@ -8,6 +8,7 @@
 
 
 ### SMD resistors (0805):
+
 | value | #| part | note |
 | ---: | ---: | --- | --- |
 | 100R | 4x | e.g. mouser # 279-1623096-1 | 1% |
@@ -23,6 +24,7 @@
 | 100k | 8x | e.g. mouser # 660-RK73H2ATTD1003F| 1% (or simply get 12 x 0.1%) |
 
 ### SMD caps (0805) (25V or better):
+
 | value | #| type | note |
 | --- | ---: | :---: | --- |
 | 18p-22p | 4x | **C0G/NP0** (!) | e.g. mouser # 77-VJ0805A180GXACBC |
