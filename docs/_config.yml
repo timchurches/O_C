@@ -4,5 +4,5 @@ gems:
 permalink: pretty
 title: Ornament & Crime
 description: A polymorphic CV generator module for eurorack modular synthesisers.
-show_downloads: true
+show_downloads: false
 google_analytics:
