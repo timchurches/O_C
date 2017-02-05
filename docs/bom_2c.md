@@ -79,8 +79,6 @@ title: BOM for O+C rev 2c
 - (††) best to **use "machined pin" ones** (also called "round" or "precision"): the pcb holes are small. Or these sockets from RS-Online are a good alternative and will accept standard square-pin 0.1 inch pitch headers:  http://au.rs-online.com/web/p/products/2304893/?sra=p&r=t 
 - (†††) much cheaper is [sos](http://www.soselectronic.com/?str=371&artnum=102165&name=mec-5gth935).
 
-
-
 ## MCU/display:
 
 | what | # | note | source |
