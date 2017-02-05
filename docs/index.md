@@ -22,4 +22,7 @@ eurorack / teensy 3.x DAC8565 quad 16bit CV module w/ OLED display
  * [Firmware installation](/O_C/firmware/)
  * [Calibration](/O_C/calibration/)
 
+### Videos and Tracks
 
+ * [Videos and recordings made using Ornament & Crime](/O_C/videos-and-tracks/)
+ 
