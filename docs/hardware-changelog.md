@@ -1,7 +1,7 @@
-##NB: prior to version `2.c`, the input stage consisted of a TL074 (+BAT54s), _not_ a MCP6004. other than that, the differences between recent versions are _very_ minor. see [here](https://github.com/mxmxmx/O_C/wiki/BOM_legacy) for the legacy BOM.
+## NB: prior to version `2.c`, the input stage consisted of a TL074 (+BAT54s), _not_ a MCP6004. other than that, the differences between recent versions are _very_ minor. see [here](https://github.com/mxmxmx/O_C/wiki/BOM_legacy) for the legacy BOM.
 
 
-#PCB versions:
+# PCB versions:
 
 ### rev 2.e (07/2016)
 
