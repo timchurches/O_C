@@ -1,3 +1,7 @@
+---
+title: BOM for O+C rev 2c
+---
+
 # BOM for O+C (rev 2c) 
 
 - if your board is is labelled rev.2c (on top of the board, underneath the 'ornament and crime' label), that's rev 2c. previous versions differ only slightly.
