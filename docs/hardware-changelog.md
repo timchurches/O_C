@@ -3,21 +3,21 @@
 
 #PCB versions:
 
-###rev 2.e (07/2016)
+### rev 2.e (07/2016)
 
 - colour: red, labelled `rev 2.e`
 - silkscreen corrections (75k, 560p)
 - trimpots removed
 - supported by current firmware
 
-###rev 2.d (04/2016) 
+### rev 2.d (04/2016) 
 
 - colour: red, labelled `rev 2.d`
 - make everything 0805 -> move 10n caps into feedback loop 
 - add CC-BY-SA licence
 - supported by current firmware
 
-###rev 2.c (12/2015) 
+### rev 2.c (12/2015) 
 
 - colour: yellow, labelled `rev 2.c`
 - move mounting hole -> improve mechanical stability
@@ -27,7 +27,7 @@
 - **replace TL074/bat54s with MCP6004**
 - supported by current firmware
 
-###rev 2.b (07/2015)
+### rev 2.b (07/2015)
 
 - colour: yellow, labelled `rev.2`
 - ditch the alternative (adafruit) OLED header
@@ -35,7 +35,7 @@
 - add holes (underneath the jacks)
 - supported by current firmware
 
-###rev 2.a (05/2015)
+### rev 2.a (05/2015)
 
 - colour: yellow, labelled `rev.2`
 - use LM1117, not 7805 regulator
@@ -44,12 +44,12 @@
 - simplify output stage: 4x single inverting op-amps
 - supported by current firmware.
 
-###rev 1 (08/2014)
+### rev 1 (08/2014)
 
 - colour: yellow, labelled `rev.1`
 - replace precision resistors with rheostats.
 - needs **modification** of the output stage to work with the current firmware.
 
-###rev 0 (06/2014) 
+### rev 0 (06/2014) 
 - colour: green, labelled `4xCV`
 - unpublished
