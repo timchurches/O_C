@@ -1,6 +1,6 @@
-#hardware basics
+# hardware basics
 
-##in brief:
+## in brief
 
 - [Teensy 3.1 / 3.2 dev board](https://www.pjrc.com/teensy/) (Freescale MK20DX256 / 32-bit ARM Cortex M4).
 - 4x precision CV outputs, 16-bit (TI [DAC8565](http://www.ti.com/lit/ds/symlink/dac8565.pdf)). 
@@ -14,7 +14,7 @@
 - 16.67kHz internal timer (CPU overclocked to 120MHz), which is also the DAC update rate. the ADC is also read at 16.67kHz but in several of the o_C "apps", 16 values are averaged to remove noise, meaning that the effective sample rate for CV inputs is about 1 kHz. Digital (gate/trigger) inputs are read at 16.67 KHz - this ensures very low latency.
 - +/-12V power only, ca. 85mA power draw on +12V bus, much less on -12V bus)
 
-##more verbose:
+## more details
 
 - **o_C** is a fairly straightforward DAC breakout board for the (Arduino-compatible) **teensy 3.1/3.2** ARM development board (cortex M4), with an OLED display: 
 somewhat like a pimped-up "ardcore", though its focus is on generating **precision control voltages** rather than being (entirely) general purpose (see the [schematic](https://github.com/mxmxmx/O_C/blob/master/hardware/o_c_rev2e_schematic.pdf) and note re SPI below). 
@@ -42,10 +42,10 @@ somewhat like a pimped-up "ardcore", though its focus is on generating **precisi
  
 ============================================================================================
 
-##disclaimer:
+## disclaimer
 - i drew the circuit **by hand** (which is to say, in pcb-view); the [schematic (rev 2e)](https://github.com/mxmxmx/O_C/blob/master/hardware/o_c_rev2e_schematic.pdf) is entirely **post-hoc**, though it should be (is) a fairly accurate reflection of what's going on. anyways, it's all generic digital module stuff, so fairly unexciting. here's the basics, more verbose (this pertains to 2d, 2e boards):
 
-###output: 
+### output
 
 - inverting op amp, - 4x gain and offset (V_bias = 1.25v):
 
@@ -63,7 +63,7 @@ somewhat like a pimped-up "ardcore", though its focus is on generating **precisi
 
 - versions **prior** to 2e: there's a trimpot per channel (labelled `2k`) in series with a 24k input resistor (to adjust the gain, ie 100/25 = 4): ignore those, and simply use **24k9** 0.1% resistors instead (details [here](https://github.com/mxmxmx/O_C/wiki/build-it#nb--jumpers)).
 
-###CV inputs: 
+### CV inputs 
 
 - inverting op amp with negative offset, from AREF (LM4040-5):
 
@@ -75,13 +75,14 @@ somewhat like a pimped-up "ardcore", though its focus is on generating **precisi
 - the range can be adjusted (should you prefer) by substituting the 75k resistor: 100k will yield a fully bipolar range (-5v/5v), 49k9 will yield ~ 0-10v. 
 - note: the silkscreen (wrongly) says `49k9` where is should say `75k`. (fixed in 2e)
 
-###digital inputs: 
+### digital inputs 
 
 - using (NPN) transistor 'switches'. ie collector tied to 3V3 via a series resistor; emitter to ground; the trigger signals go into the base via a 100k series resistor and 33k to ground.
 - as of rev 2.c the internal pull-up resistors are used (50k, ish):
 
 <img src="https://c2.staticflickr.com/6/5794/22739727543_a5f7b4fc28_c.jpg" width="60%">.
-###encoders: 
+
+### encoders 
 
 - the encoders use pins 14, 15, 16 resp. 21, 22, 23 (any or all of these pins could be wired as/to potentiometers); the two tact switches use pins 4 and 5. here's the teensy pinout for reference: 
 
