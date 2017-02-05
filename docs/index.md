@@ -3,6 +3,7 @@ ornament & crime. polymorphic CV generator
 
 ![My image](https://farm1.staticflickr.com/676/20090774694_b56e557693_b.jpg)
 
+{% include navigation.html context="/" %}
 
 ### firmware:
 
