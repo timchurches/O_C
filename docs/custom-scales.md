@@ -72,5 +72,5 @@ adding or modifying existing scales is easy and doesn't require programming skil
 
   - 1. add the suitable **scale definition** to `const Scale scales[]`, as well as 
   - 2. add (at the corresponding array position) the short and long versions of the **scale name** to `scale_names[]` and `scale_names_short[]`, respectively. 
-  - 3. re-compile as per method B [here](https://github.com/mxmxmx/O_C/wiki/firmware#method-b-compiling-the-firmware).
+  - 3. re-compile as per method B [here](/O_C/firmware/#method-b-compiling-the-firmware).
 
