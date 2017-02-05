@@ -34,14 +34,14 @@ The apps currently available in Ornaments & Crimes are:
 - [_Viznutcracker, sweet!_](#viznutcracker-sweet) is a quad **"byte beat" equation generator**, which can be used as an audio source to generate curious but often interesting 8-bit noises and tunes, or which can be clocked by an external source to produce "byte beat" control voltage sequences. "Byte beats" were first [described](http://countercomplex.blogspot.com/2011/10/algorithmic-symphonies-from-one-line-of.html) in 2011 by viznut (aka Ville-Matias Heikkilä). 
 - [_References_](#references) is a simple utility app that outputs specific **reference voltages** on each channel to help tune or calibrate VCOs and other modules.
 
-For information about the O+C module **hardware**, including DIY build details, please start [here](https://github.com/mxmxmx/O_C/wiki/hardware-basics).
+For information about the O+C module **hardware**, including DIY build details, please start [here](/O_C/hardware-basics/).
 
 ***
 
 ## Startup
 
 Immediately after power-on, the start-up phase is indicated by a line at the bottom of the display which progressively shrinks right-to-left. By default, following start-up phase, the module boots into the last saved app, unless one of the encoders is held down:
-- hold down the Left encoder: Boot into calibration mode (unchanged from the original O+C firmware - please see the calibration procedure [here](https://github.com/mxmxmx/O_C/wiki/calibration))
+- hold down the Left encoder: Boot into calibration mode (unchanged from the original O+C firmware - please see the calibration procedure [here](/O_C/calibration)/)
 - hold down the Right encoder: Enter the app selection menu
 
 ## App Selection
@@ -60,7 +60,7 @@ The settings for each O&C app are **NOT** saved automagically. To save the curre
 
 ## General operation of the apps
 
-Each app has two display pages, a settings mode and a "screensaver" mode. The apps drop into screensaver mode after a short period of inactivity (that is, no user interaction); the timeout period can be set in the [calibration menu](https://github.com/mxmxmx/O_C/wiki/calibration#4-screensaver-timeout-period). Alternatively, **long press** (> ~ 1.5 sec) the `up button` to **preview** the screensaver. 
+Each app has two display pages, a settings mode and a "screensaver" mode. The apps drop into screensaver mode after a short period of inactivity (that is, no user interaction); the timeout period can be set in the [calibration menu](/O_C/calibration/#4-screensaver-timeout-period). Alternatively, **long press** (> ~ 1.5 sec) the `up button` to **preview** the screensaver. 
 
 - In the background, the module functions the same regardless of whether settings are displayed or the screensaver is displayed. When the screensaver is displayed, clicking or rotating either of the two encoders, or pressing the Up or Down buttons will immediately swap to the settings display.
 
