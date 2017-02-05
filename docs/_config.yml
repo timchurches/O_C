@@ -2,4 +2,7 @@ theme: jekyll-theme-slate
 gems:
   - jemoji
 permalink: pretty
+pages_list:       
+  User Manual: '/user-manual/'
+  Build Guide: '/build-it/'
   
