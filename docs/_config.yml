@@ -2,7 +2,7 @@ theme: jekyll-theme-time-machine
 gems:
   - jemoji
 permalink: pretty
-pages_list:       
-  User Manual: '/user-manual/'
-  Build Guide: '/build-it/'
-  
+title: Ornament & Crime
+description: A polymorphic CV generator module for eurorack modular synthesisers.
+show_downloads: true
+google_analytics:
