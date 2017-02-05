@@ -13,7 +13,7 @@ This documentation is for v1.2 firmware. Documentation for earlier versions can 
 
 ![welcome](https://c1.staticflickr.com/9/8081/29067972953_84e42ba7ac_k.jpg)
 
-- **Ornaments & Crimes** is a collaborative [open-source](https://github.com/mxmxmx/O_C/wiki/Licensing-of-Ornament(s)---and-Crime(s)) project by Patrick Dowling (aka pld), mxmxmx and Tim Churches (aka bennelong.bicyclist). It (considerably) extends the original firmware for the Ornament & Crime (O+C) DIY eurorack module, designed by mxmxmx. 
+- **Ornaments & Crimes** is a collaborative [open-source](/O_C/licensing/) project by Patrick Dowling (aka pld), mxmxmx and Tim Churches (aka bennelong.bicyclist). It (considerably) extends the original firmware for the Ornament & Crime (O+C) DIY eurorack module, designed by mxmxmx. 
 
 - There is still a **quantising ASR** (analogue shift register) function in Ornaments & Crimes, now named _CopierMaschine_, **but several other "apps" have been added**, incl. quantizers, sequencers, LFOs, random/chaotic CV generators, and so on. These apps are selectable **on-the-fly**, without having to reboot the module or toggle the power. 
 
@@ -864,7 +864,7 @@ If you have an oscilloscope capable of displaying X/Y (vectorscope) signals, try
 
 ## Piqued
 
-_Piqued_ is a a port of the envelope generator function from the open-source [Mutable Instruments Peaks](http://mutable-instruments.net/modules/peaks) module. _Piqued_ provides four independently-triggerable envelopes on output channels A to D, with independently mappable voltage-control via the CV1 to CV4 inputs over envelope duration parameters for each segment of each envelope. (v1.1 or later: Voltage control over the Euclidean trigger filter parameters and the trigger delay time is also possible - see below.) Triggers for each of the four envelopes can also be mapped from any of the four trigger inputs (TR1 to TR4). Segment shape (curves) can be set for each segment of each of the four envelopes. A variety of envelope types are available, also independently settable for each envelope, including repeating (looping) envelope types. The shape of each envelope can be visualised while setting parameters. There is also a "Euclidean trigger filter" included, which turns the _Piqued_ app into a quad-channel Euclidean polyrhythm generator, that can output envelopes, not just gate/trigger signals. See the [O&C videos page](https://github.com/mxmxmx/O_C/wiki/Ornament-and-Crime-videos-and-tracks) for some demonstrations of _Piqued_.
+_Piqued_ is a a port of the envelope generator function from the open-source [Mutable Instruments Peaks](http://mutable-instruments.net/modules/peaks) module. _Piqued_ provides four independently-triggerable envelopes on output channels A to D, with independently mappable voltage-control via the CV1 to CV4 inputs over envelope duration parameters for each segment of each envelope. (v1.1 or later: Voltage control over the Euclidean trigger filter parameters and the trigger delay time is also possible - see below.) Triggers for each of the four envelopes can also be mapped from any of the four trigger inputs (TR1 to TR4). Segment shape (curves) can be set for each segment of each of the four envelopes. A variety of envelope types are available, also independently settable for each envelope, including repeating (looping) envelope types. The shape of each envelope can be visualised while setting parameters. There is also a "Euclidean trigger filter" included, which turns the _Piqued_ app into a quad-channel Euclidean polyrhythm generator, that can output envelopes, not just gate/trigger signals. See the [O&C videos page](/O_C/videos-and-tracks/) for some demonstrations of _Piqued_.
 
 ### Controls
 
@@ -1273,13 +1273,13 @@ The screen is divided into four channel lanes (columns), with the same layout as
 
 # Firmware CHANGELOG
 
- - [Changes between v1.1 and v1.2](https://github.com/mxmxmx/O_C/wiki/firmware-change-log#changes-between-v11-and-v12)
- - [Changes between v1.0 and v1.1](https://github.com/mxmxmx/O_C/wiki/firmware-change-log#changes-between-v10-and-v11)
+ - [Changes between v1.1 and v1.2](/O_C/firmware-changelog/#changes-between-v11-and-v12)
+ - [Changes between v1.0 and v1.1](/O_C/firmware-changelog/#changes-between-v10-and-v11)
 
 # Appendices
- - [VIDEOS](https://github.com/mxmxmx/O_C/wiki/Ornament-and-Crime-videos-and-tracks)
+ - [VIDEOS](/O_C/videos-and-tracks/)
  - [credits, thanks, acknowledgements, and sources of inspiration](#credits-thanks-acknowledgements-and-sources-of-inspiration)
- - [licensing of PCB design files and of firmware and its source code](https://github.com/mxmxmx/O_C/wiki/Licensing-of-Ornament(s)---and-Crime(s))
+ - [licensing of PCB design files and of firmware and its source code](/O_C/licensing/)
  - [known issues and things to be checked and improved](#known-issues-and-things-to-be-checked-or-improved)
 
 # Credits, thanks, acknowledgements, and sources of inspiration
