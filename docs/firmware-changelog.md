@@ -39,7 +39,7 @@
 #### Changes between v1.0 and v1.1
 
 * removal of some redundant code and unused libraries
-* changes to the encoder direction setting when in calibration mode to accommodate the swap in GPIO pin assignment for the right encoder introduced in version 2c and later of the O&C PCBs - see [setting encoder directions](https://github.com/mxmxmx/O_C/wiki/calibration#0-setting-encoder-directions) on the calibration wiki page.
+* changes to the encoder direction setting when in calibration mode to accommodate the swap in GPIO pin assignment for the right encoder introduced in version 2c and later of the O&C PCBs - see [setting encoder directions](/O_C/calibration/#0-setting-encoder-directions) on the calibration wiki page.
  
 * _Quantermain_
   * mappable input CV sources to control the built-in LFSR (Turing Machine) probability and range parameters have been added - yes, voltage-controlled Turing Machines!
