@@ -40,7 +40,7 @@ somewhat like a pimped-up "ardcore", though its focus is on generating **precisi
   * ~~pitch CV generators~~ -- implemented in the ornaments & crimes firmware
   * usb-midi to CV stuff (teensies are easily turned into class compliant USB devices; though there's no socket on the panel, of course). 
  
-============================================================================================
+---
 
 ## disclaimer
 - i drew the circuit **by hand** (which is to say, in pcb-view); the [schematic (rev 2e)](https://github.com/mxmxmx/O_C/blob/master/hardware/o_c_rev2e_schematic.pdf) is entirely **post-hoc**, though it should be (is) a fairly accurate reflection of what's going on. anyways, it's all generic digital module stuff, so fairly unexciting. here's the basics, more verbose (this pertains to 2d, 2e boards):
