@@ -7,7 +7,7 @@ layout: default
 
 ### firmware:
 
-The firmware for the **Ornament & Crime** (o_C) module is a collaborative project by Patrick Dowling (aka pld), mxmxmx and Tim Churches (aka bennelong.bicyclist) (though mostly by pld and bennelong.bicyclist). it **(considerably) extends** the original firmware for the o_C / ASR eurorack module, designed by mxmxmx.
+The firmware for the **Ornament & Crime** (o_C) module is a collaborative project by Patrick Dowling (aka pld), Max Stadler (aka mxmxmx) and Tim Churches (aka bennelong.bicyclist). It **(considerably) extends** the original firmware for the o_C / ASR eurorack module, designed by mxmxmx.
 
  * [User manual](/O_C/user-manual/)
  * [Custom scales](/O_C/custom-scales/)
