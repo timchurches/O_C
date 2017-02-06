@@ -1,4 +1,7 @@
-# hardware basics
+---
+title: hardware basics
+layout: default
+---
 
 ## in brief
 
