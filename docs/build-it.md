@@ -1,4 +1,7 @@
-# building the thing
+---
+title: building the thing
+layout: default
+---
 
 ![thething](https://c1.staticflickr.com/9/8016/29538793842_6a1f8160bd_c.jpg)
 
