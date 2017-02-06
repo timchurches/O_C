@@ -1,4 +1,7 @@
-### CHANGELOG
+---
+title: firmware chnagelog
+layout: default
+---
 
 #### Changes between v1.1 and v1.2
 * General operation
