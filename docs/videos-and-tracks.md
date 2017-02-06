@@ -1,3 +1,8 @@
+---
+title: videos and sound tracks
+layout: default
+---
+
 Here are some videos and sound tracks about or featuring Ornament(s) & Crime(s).
 
 # Videos
