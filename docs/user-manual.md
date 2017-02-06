@@ -6,12 +6,9 @@ Extended Firmware for the Ornament & Crime DIY eurorack module.
 
 This documentation is for v1.2 firmware. Documentation for earlier versions can be found [here](https://github.com/mxmxmx/O_C/wiki/Ornaments-and-Crimes-extended-firmware). 
 
-## Table of Contents 
-
-* TOC
-{:toc}
-
 ---
+
+# Overview
 
 ![welcome](https://c1.staticflickr.com/9/8081/29067972953_84e42ba7ac_k.jpg)
 
@@ -39,6 +36,8 @@ The apps currently available in Ornaments & Crimes are:
 For information about the O+C module **hardware**, including DIY build details, please start [here](/O_C/hardware-basics/).
 
 ***
+
+# Principles of operation
 
 ## Startup
 
