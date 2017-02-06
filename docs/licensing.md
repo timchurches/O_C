@@ -1,3 +1,8 @@
+---
+title: Licensing
+layout: default
+---
+
 The following licensing provisions apply to the Ornament + Crime (O+C) hardware design, the Ornaments + Crimes firmware and its source code bundle (repository), and to the associated documentation for both the hardware and the firmware and its source code.
 
 ## PCB files
