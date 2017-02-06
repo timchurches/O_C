@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <meta name="description" content="{{ site.title | default: site.github.repository_name }} : {{ site.description | default: site.github.project_tagline }}">
+
+    <!-- JQuery required by Bootstrap -->
+    <script   src="https://code.jquery.com/jquery-1.9.1.min.js"   integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ="   crossorigin="anonymous"></script>    
+    
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- add after bootstrap.min.css -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.4.1/dist/bootstrap-toc.min.css">
+    <!-- add after bootstrap.min.js -->
+    <script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v0.4.1/dist/bootstrap-toc.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+
+    <title>{{ site.title | default: site.github.repository_name }}</title>
+  </head>
+
+  <body data-spy="scroll" data-target="#toc" padding-top="70px">
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+
+      
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/O_C/">o_C</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hardware <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/O_C/hardware-basics/">Basics</a></li>
+            <li><a href="/O_C/build-it/">Build it!</a></li>
+            <li><a href="/O_C/firmware/">Firmware installation</a></li>
+            <li><a href="/O_C/calibration/">Calibration</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/O_C/hardware-changelog/">Hardware CHANGELOG</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User manual <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/O_C/user-manual/#overview">Overview</a></li>
+            <li><a href="/O_C/user-manual/#operational-principles">Operational principles</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/O_C/user-manual/#copiermaschine">CopierMaschine</a></li>
+            <li><a href="/O_C/user-manual/#harrington-1200">Harrington 1200</a></li>
+            <li><a href="/O_C/user-manual/#automatonnetz">Automatonnetz</a></li>
+            <li><a href="/O_C/user-manual/#quantermain">Quantermain</a></li>
+            <li><a href="/O_C/user-manual/#meta-q">Meta-Q</a></li>
+            <li><a href="/O_C/user-manual/#quadraturia">Quadraturia</a></li>
+            <li><a href="/O_C/user-manual/#low-rents">Low-rents</a></li>
+            <li><a href="/O_C/user-manual/#piqued">Piqued</a></li>
+            <li><a href="/O_C/user-manual/#sequins">Sequins</a></li>
+            <li><a href="/O_C/user-manual/#dialectic-ping-pong">Dialectic Ping Pong</a></li>
+            <li><a href="/O_C/user-manual/#viznutcracker-sweet">Viznutcracker, sweet!</a></li>
+            <li><a href="/O_C/user-manual/#references">References</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="/O_C/user-manual/#appendices">Appendices</a></li>
+            <li><a href="/O_C/user-manual/#known-issues">Known issues</a></li>
+          </ul>
+        </li>
+        <li class="active"><a href="/O_C/licensing/">Licensing <span class="sr-only">(current)</span></a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+      
+      
+      
+      
+      
+      
+      
+      
+        <header class="inner">
+          <a id="forkme_banner" href="{{ site.github.repository_url }}">View on GitHub</a>
+
+          <h1 id="project_title">{{ site.title | default: site.github.repository_name }}</h1>
+          <h2 id="project_tagline">{{ site.description | default: site.github.project_tagline }}</h2>
+
+          {% if site.show_downloads %}
+            <section id="downloads">
+              <a class="zip_download_link" href="{{ site.github.zip_url }}">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="{{ site.github.tar_url }}">Download this project as a tar.gz file</a>
+            </section>
+          {% endif %}
+      </header>
+    </div>
+
+     <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        {{ content }}
+      </section>
+    </div>  
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        {% if site.github.is_project_page %}
+        <p class="copyright">{{ site.title | default: site.github.repository_name }} maintained by Max Stadler, Patrick Dowling and Tim Churches.</p>
+        {% endif %}
+        <p>This documentation is published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+
+
+  </body>
+</html>
