@@ -38,7 +38,7 @@ For information about the O+C module **hardware**, including DIY build details, 
 
 ***
 
-# Principles of operation
+# Operational principles
 
 ## Startup
 
