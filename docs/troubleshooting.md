@@ -1,3 +1,10 @@
+---
+title: troubleshooting
+layout: default
+---
+
+Some code useful for troubleshooting:
+
 ```
 
 /* 
