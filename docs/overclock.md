@@ -1,4 +1,7 @@
-# overclock. 
+---
+title: overclocking the Teensy
+layout: default
+---
 
 ###instructions for teensyduino versions prior to 1.30:
 
