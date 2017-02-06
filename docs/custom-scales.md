@@ -1,4 +1,7 @@
-#custom scales
+---
+title: custom scales
+layout: default
+---
 
 adding or modifying existing scales is easy and doesn't require programming skills. it boils down to adding or editing the scale definitions, which are basically just ordered lists of numbers from `0 - 1536`, as described below.
 
