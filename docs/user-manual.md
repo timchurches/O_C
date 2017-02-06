@@ -1272,10 +1272,6 @@ The screen is divided into four channel lanes (columns), with the same layout as
 
 ***
 
-# Firmware CHANGELOG
-
- - [Changes between v1.1 and v1.2](/O_C/firmware-changelog/#changes-between-v11-and-v12)
- - [Changes between v1.0 and v1.1](/O_C/firmware-changelog/#changes-between-v10-and-v11)
 
 # Appendices
  - [VIDEOS](/O_C/videos-and-tracks/)
@@ -1283,13 +1279,18 @@ The screen is divided into four channel lanes (columns), with the same layout as
  - [licensing of PCB design files and of firmware and its source code](/O_C/licensing/)
  - [known issues and things to be checked and improved](#known-issues-and-things-to-be-checked-or-improved)
 
-# Credits, thanks, acknowledgements, and sources of inspiration
+## Firmware CHANGELOG
 
-## Credits (who did what)
+ - [Changes between v1.1 and v1.2](/O_C/firmware-changelog/#changes-between-v11-and-v12)
+ - [Changes between v1.0 and v1.1](/O_C/firmware-changelog/#changes-between-v10-and-v11)
+
+## Credits, thanks, acknowledgements, and sources of inspiration
+
+### Credits (who did what)
 
 We welcome contributions from others (ideally via _pull_ requests on GitHub) to the Ornaments & Crimes firmware, and we will acknowledge any such contributions in detail. To make such detailed acknowledgements easier, we have documented here the contributions of the original developers of O+C and the Ornaments & Crimes firmware. If you make a contribution which is included the firmware, we'll add your name! 
 
-### Hardware
+#### Hardware
 
 - Max Stadler (aka mxmxmx): 
   - all hardware and circuit design
@@ -1297,7 +1298,7 @@ We welcome contributions from others (ideally via _pull_ requests on GitHub) to 
   - hardware debugging
   - build and calibration instructions and procedures
 
-### Firmware
+#### Firmware
 
 - Max Stadler: 
   - overall firmware framework and hardware interfacing abstractions
@@ -1338,14 +1339,14 @@ We welcome contributions from others (ideally via _pull_ requests on GitHub) to 
   - quite a lot of this documentation
   - lots of testing, debugging, and tweaking of code
 
-## Thanks
+### Thanks
 
  - Enormous thanks to Olivier Gillet of Mutable Instruments for all of the wonderful [open-source module code](https://github.com/pichenettes/eurorack) which we have ported to and re-used in O+C 
  - Paul Stoffregen for creating the open-source [Teensy platform](https://www.pjrc.com/teensy/teensy31.html) and associated firmware libraries used by the O+C module
  - Bret Truchan for permission to use byte beats equations which he collected, devised  and curated for the excellent Microbe Modular [Equation Composer](http://microbemodular.com/products/equation-composer/overview) module, which is highly recommended for anyone interested in byte beats
  - Stephen from Noise Engineering for helpful notes and info about the neo-Riemannian transformation implementation in his [Tonnetz Sequent](http://www.noiseengineering.us/tonnetz-sequent/) module, which is highly recommended for anyone interested in tonnetz harmonies.
  
-## Acknowledgements and sources of inspiration
+### Acknowledgements and sources of inspiration
 
  - the Noise Engineering [Tonnetz Sequent](http://www.noiseengineering.us/tonnetz-sequent/) module for introducing us to [neo-Riemannian transformations](https://en.wikipedia.org/wiki/Neo-Riemannian_theory) and harmonic tonnetz music theory
  - Frank Daniels (aka fcd72) for many of the [ideas behind the vector sequencer](https://dmachinery.wordpress.com/2013/01/05/the-vector-sequencer/) used in the _Automatonnetz_ app
@@ -1358,7 +1359,7 @@ We welcome contributions from others (ideally via _pull_ requests on GitHub) to 
 
 ***
 
-# Known Issues and Things to be checked or improved
+# Known Issues
 
 - the 16.6 kHz DAC update rate means that audible digital aliasing is present when the output is used as an audio source - which is why the only app intended as an audio source is _Viznutcracker, sweet!_, which, as a byte beat generator, **depends** on lots of horrible digital aliasing and related digital artefacts to create its distinct sound. That said, several of the other apps can produce signals in the audio range, but you may need to use them with a low-pass filter to remove some of the aliasing noise (if you wish - some people like the inharmonic "sizzle" of digital aliasing). Anyway, just be aware that O+C is intended to be used as a pitch CV generator, and as a slow modulation CV source, not as audio oscillator or audio signal generator. In theory, some of the digital aliasing may "bleed through" into the audio domain even when the O+C is used as a modulation CV source (eg as an envelope generator or LFO modulating a VCF cut-off or VCA gain). We have not found that to be a problem in practice, but if it does become apparent, then you can always interpose a low-pass filter between the O+C and whatever is being modulated. WMD make a module exactly for this purpose: the [Quad Anti-aliasing Filter (QAAF)](https://www.wmdevices.com/collections/eurorack-modules/products/quad-anti-aliasing-filter-qaaf). However, this is unlikely to be required. Note that for its original designed purpose, as a module that deals with or generates pitch CVs, the 16.6 KHz DAC update rate is not a problem.
 - add a brief on-screen confirmatory message when settings are saved. Currently, there is no feedback that the save has been successful.
