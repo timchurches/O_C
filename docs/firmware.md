@@ -1,6 +1,13 @@
+---
+title: firmware
+layout: default
+---
+
 Ornaments & Crimes is free, open-source software (firmware) for the Ornament + Crime module. The licenses under which the software is released permit anyone to freely install and use the firmware on copies of the module, to modify it, and to provide copies to others. Third-party module manufacturers who re-use portions of the O+C software in their modules or devices should ensure that they meet the obligations imposed by the licenses under which the O+C source code is released - details are [here](/O_C/licensing/).
 
-##There are two ways of getting the firmware onto your module:
+## Firmware upload methods
+
+There are two ways of getting the firmware onto your module:
 
 - [Method A](#method-a-uploading-the-hex-file): upload a pre-compiled HEX file. this is easy and quick. or
 - [Method B](#method-b-compiling-the-firmware): install the Arduino IDE and the Teensyduino add-on and compile the code yourself. this option is required if you wanted to hack the code, etc.
