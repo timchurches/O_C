@@ -1,4 +1,7 @@
-# Calibration
+---
+title: calibration
+layout: default
+---
 
 - Calibration mode lets you fine-tune the **CV outputs** and **inputs** as well as adjust some basic settings: 
   - display offset
