@@ -1,5 +1,6 @@
 ---
-title: Ornament & Crime firmware user manual for v1.2
+title: user manual for v1.2
+layout: default
 ---
 
 Extended Firmware for the Ornament & Crime DIY eurorack module.
